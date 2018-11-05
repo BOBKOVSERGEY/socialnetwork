@@ -7,8 +7,13 @@ if (isset($_POST['createaccount'])) {
   $password = $_POST['password'];
   $email = $_POST['email'];
 
-  DB::query('INSERT INTO users VALUES (null, :username, :password, :email)', [':username' => $username, ':password' => $password, ':email' => $email]);
-  echo 'Success!';
+  if (!DB::query('SELECT username FROM users WHERE username=:username', [':username' => $username])) {
+    DB::query('INSERT INTO users VALUES (null, :username, :password, :email)', [':username' => $username, ':password' => $password, ':email' => $email]);
+    echo 'Success!';
+  } else {
+    echo 'User already exists!';
+  }
+
 }
 
 ?>
