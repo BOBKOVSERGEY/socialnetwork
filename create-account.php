@@ -40,8 +40,8 @@ if (isset($_POST['createaccount'])) {
 
 <h1>Create account</h1>
 <form action="<?php echo $_SERVER['PHP_SELF']?>" method="post">
-  <input type="text" name="username" placeholder="Username..." value="<?php echo $username; ?>"><br><br>
-  <input type="password" name="password" placeholder="Password..." value="<?php echo $password; ?>"><br><br>
-  <input type="email" name="email" placeholder="some@somesite.com" value="<?php echo $email; ?>"><br><br>
+  <input type="text" name="username" placeholder="Username..." value="<?php if (isset($username))echo $username; ?>"><br><br>
+  <input type="password" name="password" placeholder="Password..." value="<?php if (isset($password))echo $password; ?>"><br><br>
+  <input type="email" name="email" placeholder="some@somesite.com" value="<?php if (isset($email)) echo $email; ?>"><br><br>
   <input type="submit" name="createaccount" value="Create Account">
 </form>

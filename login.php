@@ -25,7 +25,7 @@ if (isset($_POST['login'])) {
 ?>
 <h1>Login to your account</h1>
 <form action="<?php echo $_SERVER['PHP_SELF']?>" method="post">
-  <input type="text" name="username" placeholder="Username..." value="<?php echo $username; ?>"><br><br>
-  <input type="password" name="password" placeholder="Password..." value="<?php echo $password; ?>"><br><br>
+  <input type="text" name="username" placeholder="Username..." value="<?php if (isset($username)) echo $username; ?>"><br><br>
+  <input type="password" name="password" placeholder="Password..." value="<?php if (isset($password)) echo $password; ?>"><br><br>
   <input type="submit" name="login" value="Login">
 </form>
