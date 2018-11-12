@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 08 2018 г., 15:23
+-- Время создания: Ноя 12 2018 г., 16:59
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -25,6 +25,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `followers`
+--
+
+CREATE TABLE `followers` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `follower_id` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `followers`
+--
+
+INSERT INTO `followers` (`id`, `user_id`, `follower_id`) VALUES
+(2, 10, 8),
+(5, 8, 10);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `login_tokens`
 --
 
@@ -39,7 +59,7 @@ CREATE TABLE `login_tokens` (
 --
 
 INSERT INTO `login_tokens` (`id`, `token`, `user_id`) VALUES
-(10, '11d3a9e9fe01b97e2c78ec1ad63075848e2c2cc9', 8);
+(12, '5754d9555fb6e418dd0bc809d228fe5181b0810b', 10);
 
 -- --------------------------------------------------------
 
@@ -79,6 +99,12 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
 --
 
 --
+-- Индексы таблицы `followers`
+--
+ALTER TABLE `followers`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
@@ -105,16 +131,22 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `followers`
+--
+ALTER TABLE `followers`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT для таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT для таблицы `password_tokens`
 --
 ALTER TABLE `password_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
