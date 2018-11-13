@@ -40,6 +40,25 @@ if (isset($_GET['username'])) {
     if (DB::query('SELECT follower_id FROM followers WHERE user_id=:userid AND follower_id=:followerid', [':userid' => $userid, ':followerid' => $followerid])) {
       $isFollowing = true;
     }
+
+    if (isset($_POST['post'])) {
+      $postbody = Base::security($_POST['postbody']);
+      $userid = Login::isLoggedIn();
+
+      if (strlen($postbody) > 160 || strlen($postbody) < 1) {
+        die('Incorrect length!');
+      }
+
+      DB::query('INSERT INTO posts VALUES(null, :postbody, NOW(), :userid, 0)', [':postbody' => $postbody, ':userid' => $userid]);
+    }
+
+    $dbposts = DB::query('SELECT * FROM posts WHERE user_id=:userid ORDER BY id DESC', [':userid' => $userid]);
+
+    $posts = '';
+    foreach ($dbposts as $p) {
+      $posts .= $p['body']. '<hr><br>';
+    }
+
   } else {
     die('User not found!');
   }
@@ -61,3 +80,7 @@ if (isset($_GET['username'])) {
   <textarea name="postbody" id="" cols="30" rows="10"></textarea><br>
   <input type="submit" name="post" value="Post">
 </form>
+
+<div class="posts">
+  <?php echo $posts; ?>
+</div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 13 2018 г., 15:10
+-- Время создания: Ноя 13 2018 г., 16:07
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -39,7 +39,10 @@ CREATE TABLE `followers` (
 --
 
 INSERT INTO `followers` (`id`, `user_id`, `follower_id`) VALUES
-(13, 12, 8);
+(16, 8, 10),
+(17, 10, 8),
+(20, 12, 8),
+(21, 8, 12);
 
 -- --------------------------------------------------------
 
@@ -58,7 +61,7 @@ CREATE TABLE `login_tokens` (
 --
 
 INSERT INTO `login_tokens` (`id`, `token`, `user_id`) VALUES
-(16, '7868b6c0ba503fd39373b8b4b8742bfae2350be2', 10);
+(18, '0b0ef01f018339ef4509b1483c2093253759e196', 12);
 
 -- --------------------------------------------------------
 
@@ -85,6 +88,19 @@ CREATE TABLE `posts` (
   `user_id` int(11) UNSIGNED NOT NULL,
   `likes` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `posts`
+--
+
+INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`) VALUES
+(1, 'Hello world!', '2018-11-13 15:39:28', 12, 0),
+(5, 'alert(\'hello)', '2018-11-13 15:49:45', 12, 0),
+(6, '&lt;?php echo \'hello\';?&gt;\r\n&lt;script&gt;alert(\'hello)&lt;/script&gt;', '2018-11-13 15:51:19', 12, 0),
+(7, 'alert(\'hello)', '2018-11-13 15:57:33', 12, 0),
+(8, 'alert(\'hello)', '2018-11-13 15:59:21', 12, 0),
+(9, 'alert(\'hello)', '2018-11-13 16:02:33', 12, 0),
+(10, 'e', '2018-11-13 16:02:53', 12, 0);
 
 -- --------------------------------------------------------
 
@@ -158,13 +174,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `followers`
 --
 ALTER TABLE `followers`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT для таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT для таблицы `password_tokens`
@@ -176,7 +192,7 @@ ALTER TABLE `password_tokens`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
