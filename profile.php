@@ -56,11 +56,14 @@ if (isset($_GET['username'])) {
     }
 
     if (isset($_GET['postid'])) {
-      if (!DB::query('SELECT user_id FROM post_likes WHERE post_id=:postid AND user_id=:userid', [':postid' => $_GET['postid'], ':userid' => $userid])) {
+      if (!DB::query('SELECT user_id FROM post_likes WHERE post_id=:postid AND user_id=:userid', [':postid' => $_GET['postid'], ':userid' => $followerid])) {
         DB::query('UPDATE posts SET likes=likes+1 WHERE id=:postid', [':postid' => $_GET['postid']]);
-        DB::query('INSERT INTO post_likes VALUES (null, :postid, :userid)', [':postid' => $_GET['postid'], ':userid' => $userid]);
+        DB::query('INSERT INTO post_likes VALUES (null, :postid, :userid)', [':postid' => $_GET['postid'], ':userid' => $followerid]);
+        header("Location: profile.php?username=$username");
       } else {
-        echo 'Already liked!';
+        DB::query('UPDATE posts SET likes=likes-1 WHERE id=:postid', [':postid' => $_GET['postid']]);
+        DB::query('DELETE FROM post_likes WHERE post_id=:postid AND user_id=:userid', [':postid' => $_GET['postid'], ':userid' => $followerid]);
+        header("Location: profile.php?username=$username");
       }
     }
 
@@ -68,10 +71,21 @@ if (isset($_GET['username'])) {
 
     $posts = '';
     foreach ($dbposts as $p) {
-      $posts .= $p['body']."
+
+      if (!DB::query('SELECT post_id FROM post_likes WHERE post_id=:postid AND user_id=:userid', [':postid' => $p['id'], ':userid'=>$followerid])) {
+        $posts .= $p['body']."
       <form action='$_SERVER[PHP_SELF]?username=$username&postid=" . $p['id'] ."' method='post'>
     <input type='submit' name='like' value='Like'>
+    <span>".$p['likes']." likes</span>
      </form><hr><br>";
+      } else {
+        $posts .= $p['body']."
+      <form action='$_SERVER[PHP_SELF]?username=$username&postid=" . $p['id'] ."' method='post'>
+    <input type='submit' name='unlike' value='Unlike'>
+    <span>".$p['likes']." likes</span>
+     </form><hr><br>";
+      }
+
     }
 
   } else {

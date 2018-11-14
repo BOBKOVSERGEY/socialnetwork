@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 14 2018 г., 13:33
+-- Время создания: Ноя 14 2018 г., 14:12
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -99,12 +99,14 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`) VALUES
 (6, '&lt;?php echo \'hello\';?&gt;\r\n&lt;script&gt;alert(\'hello)&lt;/script&gt;', '2018-11-13 15:51:19', 12, 0),
 (7, 'alert(\'hello)', '2018-11-13 15:57:33', 12, 0),
 (8, 'alert(\'hello)', '2018-11-13 15:59:21', 12, 0),
-(9, 'alert(\'hello)', '2018-11-13 16:02:33', 12, 1),
+(9, 'alert(\'hello)', '2018-11-13 16:02:33', 12, 2),
 (10, 'e', '2018-11-13 16:02:53', 12, 1),
-(11, 'hello', '2018-11-14 12:41:53', 16, 0),
-(12, 'some', '2018-11-14 12:43:22', 16, 7),
+(11, 'hello', '2018-11-14 12:41:53', 16, 1),
+(12, 'some', '2018-11-14 12:43:22', 16, 6),
 (13, 'new', '2018-11-14 13:21:35', 16, 1),
-(14, 'rrrrrrrrrrrrr', '2018-11-14 13:29:27', 16, 0);
+(14, 'rrrrrrrrrrrrr', '2018-11-14 13:29:27', 16, 1),
+(15, 'rrrrrrrrrrrrr', '2018-11-14 13:42:29', 16, 0),
+(16, 'rrrrrrrrrrrrr', '2018-11-14 13:42:32', 16, 1);
 
 -- --------------------------------------------------------
 
@@ -123,16 +125,13 @@ CREATE TABLE `post_likes` (
 --
 
 INSERT INTO `post_likes` (`id`, `post_id`, `user_id`) VALUES
-(1, 12, 16),
-(2, 12, 16),
-(3, 12, 16),
-(4, 12, 16),
-(5, 12, 16),
-(6, 12, 16),
-(7, 12, 16),
 (8, 13, 16),
 (9, 10, 12),
-(10, 9, 12);
+(10, 9, 12),
+(15, 11, 16),
+(32, 16, 16),
+(34, 14, 16),
+(37, 9, 16);
 
 -- --------------------------------------------------------
 
@@ -234,13 +233,13 @@ ALTER TABLE `password_tokens`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `post_likes`
 --
 ALTER TABLE `post_likes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
