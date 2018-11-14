@@ -3,9 +3,9 @@ require __DIR__ . '/init.php';
 
 if (isset($_POST['createaccount'])) {
   debug($_POST);
-  $username = $_POST['username'];
-  $password = $_POST['password'];
-  $email = $_POST['email'];
+  $username = Base::security($_POST['username']);
+  $password = Base::security($_POST['password']);
+  $email = Base::security($_POST['email']);
 
   if (!DB::query('SELECT username FROM users WHERE username=:username', [':username' => $username])) {
     if (strlen($username) >= 3 && strlen($username) <= 32) {
