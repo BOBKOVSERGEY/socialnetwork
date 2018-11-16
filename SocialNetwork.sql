@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 14 2018 г., 14:12
+-- Время создания: Ноя 16 2018 г., 17:12
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -25,6 +25,42 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `comment` text NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `posted_at` datetime NOT NULL,
+  `post_id` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `comments`
+--
+
+INSERT INTO `comments` (`id`, `comment`, `user_id`, `posted_at`, `post_id`) VALUES
+(1, 'Comment test ', 8, '2018-11-16 16:14:47', 10),
+(2, 'Comment test ', 8, '2018-11-16 16:15:00', 10),
+(3, 'уще комменр', 8, '2018-11-16 16:17:47', 7),
+(4, 'у', 8, '2018-11-16 16:19:17', 9),
+(5, 'new', 8, '2018-11-16 16:27:01', 6),
+(6, 'alert(\'hello\')', 8, '2018-11-16 16:27:38', 6),
+(7, 'alert(\'hello\')', 8, '2018-11-16 16:27:54', 6),
+(8, 'sss', 8, '2018-11-16 16:30:33', 9),
+(9, 'some new comments', 8, '2018-11-16 16:33:25', 9),
+(10, 'Some new comments', 8, '2018-11-16 16:33:50', 10),
+(11, 'some new comments', 8, '2018-11-16 16:34:02', 1),
+(12, 'a lot of many comments', 8, '2018-11-16 16:34:21', 8),
+(13, 'some', 16, '2018-11-16 16:37:34', 24),
+(14, 'some', 16, '2018-11-16 16:44:03', 28),
+(15, '16.11', 16, '2018-11-16 16:52:45', 22),
+(16, 'Hello Vika', 12, '2018-11-16 17:01:46', 12);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `followers`
 --
 
@@ -41,8 +77,12 @@ CREATE TABLE `followers` (
 INSERT INTO `followers` (`id`, `user_id`, `follower_id`) VALUES
 (16, 8, 10),
 (17, 10, 8),
-(20, 12, 8),
-(21, 8, 12);
+(21, 8, 12),
+(22, 16, 8),
+(23, 8, 16),
+(24, 10, 12),
+(25, 16, 12),
+(26, 12, 8);
 
 -- --------------------------------------------------------
 
@@ -61,7 +101,7 @@ CREATE TABLE `login_tokens` (
 --
 
 INSERT INTO `login_tokens` (`id`, `token`, `user_id`) VALUES
-(19, '0d1c06d9d20d9b5ed3fd43d51febcc9cb729d6d1', 16);
+(29, 'f1bc97cdb665de609914a20d83180029ed5e76f3', 8);
 
 -- --------------------------------------------------------
 
@@ -106,7 +146,21 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`) VALUES
 (13, 'new', '2018-11-14 13:21:35', 16, 1),
 (14, 'rrrrrrrrrrrrr', '2018-11-14 13:29:27', 16, 1),
 (15, 'rrrrrrrrrrrrr', '2018-11-14 13:42:29', 16, 0),
-(16, 'rrrrrrrrrrrrr', '2018-11-14 13:42:32', 16, 1);
+(16, 'rrrrrrrrrrrrr', '2018-11-14 13:42:32', 16, 1),
+(17, 'eeeeeeeeeeee', '2018-11-14 14:29:13', 16, 0),
+(18, 'eeeeeeeeeeee', '2018-11-14 14:29:23', 16, 0),
+(19, 'eeeeeeeeeee', '2018-11-14 14:30:28', 16, 0),
+(20, 'd', '2018-11-14 14:30:35', 16, 1),
+(21, 'some new', '2018-11-14 14:32:20', 8, 0),
+(22, 'New post from Post.php', '2018-11-15 13:51:02', 8, 0),
+(23, 'New post from Post.php', '2018-11-15 13:51:17', 8, 1),
+(24, 'fffffffffffff', '2018-11-15 13:53:54', 8, 1),
+(25, 'some', '2018-11-15 13:54:43', 8, 1),
+(26, 'some yet', '2018-11-15 14:12:36', 8, 2),
+(27, 'already', '2018-11-15 14:17:57', 8, 0),
+(28, 'e', '2018-11-16 16:35:03', 8, 0),
+(29, 'eeeeeeeeeee', '2018-11-16 16:57:57', 12, 0),
+(30, 'Все привет', '2018-11-16 16:59:32', 12, 0);
 
 -- --------------------------------------------------------
 
@@ -131,7 +185,13 @@ INSERT INTO `post_likes` (`id`, `post_id`, `user_id`) VALUES
 (15, 11, 16),
 (32, 16, 16),
 (34, 14, 16),
-(37, 9, 16);
+(37, 9, 16),
+(38, 20, 16),
+(48, 23, 8),
+(52, 26, 8),
+(53, 25, 8),
+(54, 24, 8),
+(68, 26, 16);
 
 -- --------------------------------------------------------
 
@@ -163,6 +223,14 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `verified`) VALUES
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `comments_ibfk_1` (`post_id`);
 
 --
 -- Индексы таблицы `followers`
@@ -212,16 +280,22 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
 -- AUTO_INCREMENT для таблицы `followers`
 --
 ALTER TABLE `followers`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT для таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT для таблицы `password_tokens`
@@ -233,13 +307,13 @@ ALTER TABLE `password_tokens`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT для таблицы `post_likes`
 --
 ALTER TABLE `post_likes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
@@ -250,6 +324,12 @@ ALTER TABLE `users`
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
+
+--
+-- Ограничения внешнего ключа таблицы `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `login_tokens`
