@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 16 2018 г., 17:12
+-- Время создания: Ноя 19 2018 г., 14:41
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -56,7 +56,9 @@ INSERT INTO `comments` (`id`, `comment`, `user_id`, `posted_at`, `post_id`) VALU
 (13, 'some', 16, '2018-11-16 16:37:34', 24),
 (14, 'some', 16, '2018-11-16 16:44:03', 28),
 (15, '16.11', 16, '2018-11-16 16:52:45', 22),
-(16, 'Hello Vika', 12, '2018-11-16 17:01:46', 12);
+(16, 'Hello Vika', 12, '2018-11-16 17:01:46', 12),
+(17, '7', 8, '2018-11-16 17:13:27', 12),
+(18, '7', 8, '2018-11-16 17:13:39', 12);
 
 -- --------------------------------------------------------
 
@@ -101,7 +103,7 @@ CREATE TABLE `login_tokens` (
 --
 
 INSERT INTO `login_tokens` (`id`, `token`, `user_id`) VALUES
-(29, 'f1bc97cdb665de609914a20d83180029ed5e76f3', 8);
+(30, 'a8ff31167d89ecfce02312ee9e0036410249a47c', 17);
 
 -- --------------------------------------------------------
 
@@ -204,21 +206,23 @@ CREATE TABLE `users` (
   `username` varchar(32) DEFAULT NULL,
   `password` varchar(60) DEFAULT NULL,
   `email` text NOT NULL,
-  `verified` tinyint(4) NOT NULL DEFAULT '0'
+  `verified` tinyint(4) NOT NULL DEFAULT '0',
+  `profileimg` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `verified`) VALUES
-(8, 'Sergey', '$2y$10$Sb7DtRyvi5YDTlD.zOWJUOPsP81Oa.4xzcT31mjNB0odisPeteROK', 'sergey_bobkov@inbox.ru', 1),
-(10, 'Kira', '$2y$10$bgA2eRCAWdZlYAoSmEuYPOiOEOTclzeMXgzv7DwYoMg3reVZT0tO2', 'taran.kira@rambler.ru', 1),
-(12, 'Vasy', '$2y$10$jW.yZeVrrpuSMvF86jBViOJRr8HP097awdd4Easf2Rd6hKsR9R9zS', 'pochta@pktitan.ru', 0),
-(13, 'Vasy1', '$2y$10$tuTAsY15oKrhzxpQkLci5ujXNnGXVTXse1ZxkspxXiOZ4g7pqjHO.', 'pochta1@pktitan.ru', 0),
-(14, 'Verified', '$2y$10$ShpIEeTLaipYTA6N4uoXhupgmE.FZqeIXtjinZy6VzcgG4GBTBD6.', 'verified@gmail.com', 0),
-(15, 'alert(\'hello)', '$2y$10$Z7bgQ5XEEup7wNh9T5LnJO5N.Rm9S4HYy/kqNBGX7CguZwPfL/Vke', 'vzlk@yandex.ru', 0),
-(16, 'Vika', '$2y$10$fVKElmVNUMZsfiPobHr4UuUZYge5Jf.FPSm18C39bu.NzCvFxGslK', 'pktitanseo@yandex.ru', 0);
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `verified`, `profileimg`) VALUES
+(8, 'Sergey', '$2y$10$Sb7DtRyvi5YDTlD.zOWJUOPsP81Oa.4xzcT31mjNB0odisPeteROK', 'sergey_bobkov@inbox.ru', 1, NULL),
+(10, 'Kira', '$2y$10$bgA2eRCAWdZlYAoSmEuYPOiOEOTclzeMXgzv7DwYoMg3reVZT0tO2', 'taran.kira@rambler.ru', 1, NULL),
+(12, 'Vasy', '$2y$10$jW.yZeVrrpuSMvF86jBViOJRr8HP097awdd4Easf2Rd6hKsR9R9zS', 'pochta@pktitan.ru', 0, NULL),
+(13, 'Vasy1', '$2y$10$tuTAsY15oKrhzxpQkLci5ujXNnGXVTXse1ZxkspxXiOZ4g7pqjHO.', 'pochta1@pktitan.ru', 0, NULL),
+(14, 'Verified', '$2y$10$ShpIEeTLaipYTA6N4uoXhupgmE.FZqeIXtjinZy6VzcgG4GBTBD6.', 'verified@gmail.com', 0, NULL),
+(15, 'alert(\'hello)', '$2y$10$Z7bgQ5XEEup7wNh9T5LnJO5N.Rm9S4HYy/kqNBGX7CguZwPfL/Vke', 'vzlk@yandex.ru', 0, NULL),
+(16, 'Vika', '$2y$10$fVKElmVNUMZsfiPobHr4UuUZYge5Jf.FPSm18C39bu.NzCvFxGslK', 'pktitanseo@yandex.ru', 0, NULL),
+(17, 'SergeyBobkov', '$2y$10$ZpeBzRq3QGLs1xK4vpeYQOtW4mRxIaqXmcQ5j8PcH5QxZb4TJhxtm', 'bobkovsergeyarkadevich@gmail.com', 0, 'https://i.imgur.com/kcLu8VU.jpg');
 
 --
 -- Индексы сохранённых таблиц
@@ -283,7 +287,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT для таблицы `followers`
@@ -295,7 +299,7 @@ ALTER TABLE `followers`
 -- AUTO_INCREMENT для таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT для таблицы `password_tokens`
@@ -319,7 +323,7 @@ ALTER TABLE `post_likes`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
