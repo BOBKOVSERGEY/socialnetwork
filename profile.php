@@ -42,7 +42,12 @@ if (isset($_GET['username'])) {
     }
 
     if (isset($_POST['post'])) {
-      Post::createPost(Base::security($_POST['postbody']), Login::isLoggedIn(), $userid);
+      if ($_FILES['postimg']['size'] == 0) {
+        Post::createPost(Base::security($_POST['postbody']), Login::isLoggedIn(), $userid);
+      } else {
+        $postid = Post::createImgPost(Base::security($_POST['postbody']), Login::isLoggedIn(), $userid);
+        Image::uploadImage('postimg','UPDATE posts SET postimg=:postimg WHERE id=:postid', [':postid'=> $postid]);
+      }
     }
 
     if (isset($_GET['postid'])) {
@@ -67,9 +72,10 @@ if (isset($_GET['username'])) {
     <input type="submit" name="follow" value="Follow">
   <?php } }?>
 </form>
-
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>?username=<?php echo $username; ?>" method="post">
-  <textarea name="postbody" id="" cols="30" rows="10"></textarea><br>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>?username=<?php echo $username; ?>" method="post" enctype="multipart/form-data">
+  <textarea name="postbody" id="" cols="50" rows="10"></textarea><br>
+  Upload an image:
+  <input type="file" name="postimg"><br><br>
   <input type="submit" name="post" value="Post">
 </form>
 

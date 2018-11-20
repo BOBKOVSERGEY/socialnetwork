@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 19 2018 г., 14:41
+-- Время создания: Ноя 20 2018 г., 16:38
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -103,7 +103,7 @@ CREATE TABLE `login_tokens` (
 --
 
 INSERT INTO `login_tokens` (`id`, `token`, `user_id`) VALUES
-(30, 'a8ff31167d89ecfce02312ee9e0036410249a47c', 17);
+(31, '0d4bf4f2259badf3163e139af14569de7df51747', 8);
 
 -- --------------------------------------------------------
 
@@ -128,41 +128,47 @@ CREATE TABLE `posts` (
   `body` varchar(160) NOT NULL,
   `posted_at` datetime NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
-  `likes` int(11) UNSIGNED NOT NULL
+  `likes` int(11) UNSIGNED NOT NULL,
+  `postimg` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `posts`
 --
 
-INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`) VALUES
-(1, 'Hello world!', '2018-11-13 15:39:28', 12, 0),
-(5, 'alert(\'hello)', '2018-11-13 15:49:45', 12, 0),
-(6, '&lt;?php echo \'hello\';?&gt;\r\n&lt;script&gt;alert(\'hello)&lt;/script&gt;', '2018-11-13 15:51:19', 12, 0),
-(7, 'alert(\'hello)', '2018-11-13 15:57:33', 12, 0),
-(8, 'alert(\'hello)', '2018-11-13 15:59:21', 12, 0),
-(9, 'alert(\'hello)', '2018-11-13 16:02:33', 12, 2),
-(10, 'e', '2018-11-13 16:02:53', 12, 1),
-(11, 'hello', '2018-11-14 12:41:53', 16, 1),
-(12, 'some', '2018-11-14 12:43:22', 16, 6),
-(13, 'new', '2018-11-14 13:21:35', 16, 1),
-(14, 'rrrrrrrrrrrrr', '2018-11-14 13:29:27', 16, 1),
-(15, 'rrrrrrrrrrrrr', '2018-11-14 13:42:29', 16, 0),
-(16, 'rrrrrrrrrrrrr', '2018-11-14 13:42:32', 16, 1),
-(17, 'eeeeeeeeeeee', '2018-11-14 14:29:13', 16, 0),
-(18, 'eeeeeeeeeeee', '2018-11-14 14:29:23', 16, 0),
-(19, 'eeeeeeeeeee', '2018-11-14 14:30:28', 16, 0),
-(20, 'd', '2018-11-14 14:30:35', 16, 1),
-(21, 'some new', '2018-11-14 14:32:20', 8, 0),
-(22, 'New post from Post.php', '2018-11-15 13:51:02', 8, 0),
-(23, 'New post from Post.php', '2018-11-15 13:51:17', 8, 1),
-(24, 'fffffffffffff', '2018-11-15 13:53:54', 8, 1),
-(25, 'some', '2018-11-15 13:54:43', 8, 1),
-(26, 'some yet', '2018-11-15 14:12:36', 8, 2),
-(27, 'already', '2018-11-15 14:17:57', 8, 0),
-(28, 'e', '2018-11-16 16:35:03', 8, 0),
-(29, 'eeeeeeeeeee', '2018-11-16 16:57:57', 12, 0),
-(30, 'Все привет', '2018-11-16 16:59:32', 12, 0);
+INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`) VALUES
+(1, 'Hello world!', '2018-11-13 15:39:28', 12, 0, NULL),
+(5, 'alert(\'hello)', '2018-11-13 15:49:45', 12, 0, NULL),
+(6, '&lt;?php echo \'hello\';?&gt;\r\n&lt;script&gt;alert(\'hello)&lt;/script&gt;', '2018-11-13 15:51:19', 12, 0, NULL),
+(7, 'alert(\'hello)', '2018-11-13 15:57:33', 12, 0, NULL),
+(8, 'alert(\'hello)', '2018-11-13 15:59:21', 12, 0, NULL),
+(9, 'alert(\'hello)', '2018-11-13 16:02:33', 12, 2, NULL),
+(10, 'e', '2018-11-13 16:02:53', 12, 1, NULL),
+(11, 'hello', '2018-11-14 12:41:53', 16, 1, NULL),
+(12, 'some', '2018-11-14 12:43:22', 16, 6, NULL),
+(13, 'new', '2018-11-14 13:21:35', 16, 1, NULL),
+(14, 'rrrrrrrrrrrrr', '2018-11-14 13:29:27', 16, 1, NULL),
+(15, 'rrrrrrrrrrrrr', '2018-11-14 13:42:29', 16, 0, NULL),
+(16, 'rrrrrrrrrrrrr', '2018-11-14 13:42:32', 16, 1, NULL),
+(17, 'eeeeeeeeeeee', '2018-11-14 14:29:13', 16, 0, NULL),
+(18, 'eeeeeeeeeeee', '2018-11-14 14:29:23', 16, 0, NULL),
+(19, 'eeeeeeeeeee', '2018-11-14 14:30:28', 16, 0, NULL),
+(20, 'd', '2018-11-14 14:30:35', 16, 1, NULL),
+(21, 'some new', '2018-11-14 14:32:20', 8, 0, NULL),
+(22, 'New post from Post.php', '2018-11-15 13:51:02', 8, 0, NULL),
+(23, 'New post from Post.php', '2018-11-15 13:51:17', 8, 1, NULL),
+(24, 'fffffffffffff', '2018-11-15 13:53:54', 8, 1, NULL),
+(25, 'some', '2018-11-15 13:54:43', 8, 1, NULL),
+(26, 'some yet', '2018-11-15 14:12:36', 8, 2, NULL),
+(27, 'already', '2018-11-15 14:17:57', 8, 0, NULL),
+(28, 'e', '2018-11-16 16:35:03', 8, 0, NULL),
+(29, 'eeeeeeeeeee', '2018-11-16 16:57:57', 12, 0, NULL),
+(30, 'Все привет', '2018-11-16 16:59:32', 12, 0, NULL),
+(31, 'some', '2018-11-20 15:39:16', 8, 0, NULL),
+(32, 'dddddddddddddddddddddd', '2018-11-20 15:59:06', 8, 0, NULL),
+(33, '', '2018-11-20 15:59:14', 8, 0, NULL),
+(34, 'some new', '2018-11-20 16:17:05', 8, 0, NULL),
+(37, 'some', '2018-11-20 16:36:47', 8, 1, 'https://i.imgur.com/9EOBIaF.png');
 
 -- --------------------------------------------------------
 
@@ -193,7 +199,10 @@ INSERT INTO `post_likes` (`id`, `post_id`, `user_id`) VALUES
 (52, 26, 8),
 (53, 25, 8),
 (54, 24, 8),
-(68, 26, 16);
+(68, 26, 16),
+(69, 36, 8),
+(70, 35, 8),
+(71, 37, 8);
 
 -- --------------------------------------------------------
 
@@ -215,7 +224,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `verified`, `profileimg`) VALUES
-(8, 'Sergey', '$2y$10$Sb7DtRyvi5YDTlD.zOWJUOPsP81Oa.4xzcT31mjNB0odisPeteROK', 'sergey_bobkov@inbox.ru', 1, NULL),
+(8, 'Sergey', '$2y$10$Sb7DtRyvi5YDTlD.zOWJUOPsP81Oa.4xzcT31mjNB0odisPeteROK', 'sergey_bobkov@inbox.ru', 1, 'https://i.imgur.com/QWotl5x.jpg'),
 (10, 'Kira', '$2y$10$bgA2eRCAWdZlYAoSmEuYPOiOEOTclzeMXgzv7DwYoMg3reVZT0tO2', 'taran.kira@rambler.ru', 1, NULL),
 (12, 'Vasy', '$2y$10$jW.yZeVrrpuSMvF86jBViOJRr8HP097awdd4Easf2Rd6hKsR9R9zS', 'pochta@pktitan.ru', 0, NULL),
 (13, 'Vasy1', '$2y$10$tuTAsY15oKrhzxpQkLci5ujXNnGXVTXse1ZxkspxXiOZ4g7pqjHO.', 'pochta1@pktitan.ru', 0, NULL),
@@ -299,7 +308,7 @@ ALTER TABLE `followers`
 -- AUTO_INCREMENT для таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT для таблицы `password_tokens`
@@ -311,13 +320,13 @@ ALTER TABLE `password_tokens`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT для таблицы `post_likes`
 --
 ALTER TABLE `post_likes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT для таблицы `users`

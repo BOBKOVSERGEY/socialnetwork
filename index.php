@@ -20,30 +20,33 @@ WHERE posts.user_id = followers.user_id
 AND users.id = posts.user_id
 AND follower_id = :userid
 ORDER BY posts.likes DESC;', [':userid' => $userid]);
+  
+  if (!empty($followingposts)) {
+    foreach ($followingposts as $post) {
+      echo $post['body'] . ' ~ ' . $post['username'] . '<br>';
+      echo "<form action='$_SERVER[PHP_SELF]?postid=" . $post['id'] ."' method='post'>";
 
-//debug($followingposts);
-
-  foreach ($followingposts as $post) {
-    echo $post['body'] . ' ~ ' . $post['username'] . '<br>';
-    echo "<form action='$_SERVER[PHP_SELF]?postid=" . $post['id'] ."' method='post'>";
-
-    if (!DB::query('SELECT post_id FROM post_likes WHERE post_id=:postid AND user_id=:userid', [':postid' => $post['id'], ':userid'=>$userid])) {
-      echo "<input type='submit' name='like' value='Like'>";
-    } else {
-      echo "<input type='submit' name='unlike' value='Unlike'>";
-    }
-    echo "<span>".$post['likes']." likes</span>
+      if (!DB::query('SELECT post_id FROM post_likes WHERE post_id=:postid AND user_id=:userid', [':postid' => $post['id'], ':userid'=>$userid])) {
+        echo "<input type='submit' name='like' value='Like'>";
+      } else {
+        echo "<input type='submit' name='unlike' value='Unlike'>";
+      }
+      echo "<span>".$post['likes']." likes</span>
           </form>
           <form action='$_SERVER[PHP_SELF]?commentpostid=".$post['id']."' method='post'>
             <textarea name='commentbody' cols='50' rows='3'></textarea><br>
             <input type='submit' name='comment' value='Comment'>
           </form>";
 
-          Comment::displayComments($post['id']);
+      Comment::displayComments($post['id']);
 
-          echo "<hr><br>";
+      echo "<hr><br>";
 
+    }
+  } else {
+    echo 'There no posts!';
   }
+
 
 } else {
   echo 'No login';
