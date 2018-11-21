@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 20 2018 г., 16:38
+-- Время создания: Ноя 21 2018 г., 16:22
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -84,7 +84,8 @@ INSERT INTO `followers` (`id`, `user_id`, `follower_id`) VALUES
 (23, 8, 16),
 (24, 10, 12),
 (25, 16, 12),
-(26, 12, 8);
+(26, 12, 8),
+(27, 12, 16);
 
 -- --------------------------------------------------------
 
@@ -103,7 +104,7 @@ CREATE TABLE `login_tokens` (
 --
 
 INSERT INTO `login_tokens` (`id`, `token`, `user_id`) VALUES
-(31, '0d4bf4f2259badf3163e139af14569de7df51747', 8);
+(32, 'f36ac28a56039aa058d3323cc61fee05cf1b2eea', 16);
 
 -- --------------------------------------------------------
 
@@ -129,46 +130,63 @@ CREATE TABLE `posts` (
   `posted_at` datetime NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
   `likes` int(11) UNSIGNED NOT NULL,
-  `postimg` varchar(255) DEFAULT NULL
+  `postimg` varchar(255) DEFAULT NULL,
+  `topics` varchar(400) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `posts`
 --
 
-INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`) VALUES
-(1, 'Hello world!', '2018-11-13 15:39:28', 12, 0, NULL),
-(5, 'alert(\'hello)', '2018-11-13 15:49:45', 12, 0, NULL),
-(6, '&lt;?php echo \'hello\';?&gt;\r\n&lt;script&gt;alert(\'hello)&lt;/script&gt;', '2018-11-13 15:51:19', 12, 0, NULL),
-(7, 'alert(\'hello)', '2018-11-13 15:57:33', 12, 0, NULL),
-(8, 'alert(\'hello)', '2018-11-13 15:59:21', 12, 0, NULL),
-(9, 'alert(\'hello)', '2018-11-13 16:02:33', 12, 2, NULL),
-(10, 'e', '2018-11-13 16:02:53', 12, 1, NULL),
-(11, 'hello', '2018-11-14 12:41:53', 16, 1, NULL),
-(12, 'some', '2018-11-14 12:43:22', 16, 6, NULL),
-(13, 'new', '2018-11-14 13:21:35', 16, 1, NULL),
-(14, 'rrrrrrrrrrrrr', '2018-11-14 13:29:27', 16, 1, NULL),
-(15, 'rrrrrrrrrrrrr', '2018-11-14 13:42:29', 16, 0, NULL),
-(16, 'rrrrrrrrrrrrr', '2018-11-14 13:42:32', 16, 1, NULL),
-(17, 'eeeeeeeeeeee', '2018-11-14 14:29:13', 16, 0, NULL),
-(18, 'eeeeeeeeeeee', '2018-11-14 14:29:23', 16, 0, NULL),
-(19, 'eeeeeeeeeee', '2018-11-14 14:30:28', 16, 0, NULL),
-(20, 'd', '2018-11-14 14:30:35', 16, 1, NULL),
-(21, 'some new', '2018-11-14 14:32:20', 8, 0, NULL),
-(22, 'New post from Post.php', '2018-11-15 13:51:02', 8, 0, NULL),
-(23, 'New post from Post.php', '2018-11-15 13:51:17', 8, 1, NULL),
-(24, 'fffffffffffff', '2018-11-15 13:53:54', 8, 1, NULL),
-(25, 'some', '2018-11-15 13:54:43', 8, 1, NULL),
-(26, 'some yet', '2018-11-15 14:12:36', 8, 2, NULL),
-(27, 'already', '2018-11-15 14:17:57', 8, 0, NULL),
-(28, 'e', '2018-11-16 16:35:03', 8, 0, NULL),
-(29, 'eeeeeeeeeee', '2018-11-16 16:57:57', 12, 0, NULL),
-(30, 'Все привет', '2018-11-16 16:59:32', 12, 0, NULL),
-(31, 'some', '2018-11-20 15:39:16', 8, 0, NULL),
-(32, 'dddddddddddddddddddddd', '2018-11-20 15:59:06', 8, 0, NULL),
-(33, '', '2018-11-20 15:59:14', 8, 0, NULL),
-(34, 'some new', '2018-11-20 16:17:05', 8, 0, NULL),
-(37, 'some', '2018-11-20 16:36:47', 8, 1, 'https://i.imgur.com/9EOBIaF.png');
+INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `topics`) VALUES
+(1, 'Hello world!', '2018-11-13 15:39:28', 12, 0, NULL, NULL),
+(5, 'alert(\'hello)', '2018-11-13 15:49:45', 12, 0, NULL, NULL),
+(6, '&lt;?php echo \'hello\';?&gt;\r\n&lt;script&gt;alert(\'hello)&lt;/script&gt;', '2018-11-13 15:51:19', 12, 0, NULL, NULL),
+(7, 'alert(\'hello)', '2018-11-13 15:57:33', 12, 0, NULL, NULL),
+(8, 'alert(\'hello)', '2018-11-13 15:59:21', 12, 0, NULL, NULL),
+(9, 'alert(\'hello)', '2018-11-13 16:02:33', 12, 2, NULL, NULL),
+(10, 'e', '2018-11-13 16:02:53', 12, 1, NULL, NULL),
+(11, 'hello', '2018-11-14 12:41:53', 16, 1, NULL, NULL),
+(12, 'some', '2018-11-14 12:43:22', 16, 6, NULL, NULL),
+(13, 'new', '2018-11-14 13:21:35', 16, 1, NULL, NULL),
+(14, 'rrrrrrrrrrrrr', '2018-11-14 13:29:27', 16, 1, NULL, NULL),
+(15, 'rrrrrrrrrrrrr', '2018-11-14 13:42:29', 16, 0, NULL, NULL),
+(16, 'rrrrrrrrrrrrr', '2018-11-14 13:42:32', 16, 1, NULL, NULL),
+(17, 'eeeeeeeeeeee', '2018-11-14 14:29:13', 16, 0, NULL, NULL),
+(18, 'eeeeeeeeeeee', '2018-11-14 14:29:23', 16, 0, NULL, NULL),
+(19, 'eeeeeeeeeee', '2018-11-14 14:30:28', 16, 0, NULL, NULL),
+(20, 'd', '2018-11-14 14:30:35', 16, 1, NULL, NULL),
+(21, 'some new', '2018-11-14 14:32:20', 8, 0, NULL, NULL),
+(22, 'New post from Post.php', '2018-11-15 13:51:02', 8, 0, NULL, NULL),
+(23, 'New post from Post.php', '2018-11-15 13:51:17', 8, 1, NULL, NULL),
+(24, 'fffffffffffff', '2018-11-15 13:53:54', 8, 1, NULL, NULL),
+(25, 'some', '2018-11-15 13:54:43', 8, 1, NULL, NULL),
+(26, 'some yet', '2018-11-15 14:12:36', 8, 2, NULL, NULL),
+(27, 'already', '2018-11-15 14:17:57', 8, 0, NULL, NULL),
+(28, 'e', '2018-11-16 16:35:03', 8, 0, NULL, NULL),
+(29, 'eeeeeeeeeee', '2018-11-16 16:57:57', 12, 0, NULL, NULL),
+(30, 'Все привет', '2018-11-16 16:59:32', 12, 0, NULL, NULL),
+(31, 'some', '2018-11-20 15:39:16', 8, 0, NULL, NULL),
+(32, 'dddddddddddddddddddddd', '2018-11-20 15:59:06', 8, 0, NULL, NULL),
+(33, '', '2018-11-20 15:59:14', 8, 0, NULL, NULL),
+(34, 'some new', '2018-11-20 16:17:05', 8, 0, NULL, NULL),
+(37, 'some', '2018-11-20 16:36:47', 8, 1, 'https://i.imgur.com/9EOBIaF.png', NULL),
+(38, 'dddddddd', '2018-11-21 14:46:11', 16, 0, NULL, NULL),
+(39, 'some', '2018-11-21 14:46:29', 16, 0, NULL, NULL),
+(40, '', '2018-11-21 14:53:29', 16, 1, 'https://i.imgur.com/D0CsXBc.jpg', NULL),
+(41, '@sitesDevelopment Hello, world!', '2018-11-21 14:54:42', 16, 0, NULL, NULL),
+(46, '@new some', '2018-11-21 15:12:45', 16, 0, NULL, NULL),
+(47, 'some', '2018-11-21 15:12:56', 16, 0, NULL, NULL),
+(48, 'alert(\'\'hello)', '2018-11-21 15:15:47', 16, 0, NULL, NULL),
+(49, 'alert(\'\'hello)', '2018-11-21 15:20:10', 16, 0, NULL, NULL),
+(50, '@Vasy Some say', '2018-11-21 15:24:45', 16, 0, NULL, NULL),
+(51, '@Vika kkkk', '2018-11-21 15:25:26', 16, 0, NULL, NULL),
+(52, 'somу #PHP', '2018-11-21 15:34:14', 16, 0, NULL, NULL),
+(53, 'say @Vika', '2018-11-21 15:34:25', 16, 0, NULL, NULL),
+(54, 'post', '2018-11-21 15:49:34', 16, 0, NULL, ''),
+(56, '#PHP', '2018-11-21 15:51:00', 16, 0, 'https://i.imgur.com/lRy4rie.jpg', 'PHP,'),
+(58, 'Hello world #PHP #JAVASCRIP', '2018-11-21 15:54:15', 16, 0, NULL, 'PHP,JAVASCRIP,'),
+(59, 'Hello #Scala some? some', '2018-11-21 15:55:35', 16, 0, NULL, 'Scala,');
 
 -- --------------------------------------------------------
 
@@ -202,7 +220,8 @@ INSERT INTO `post_likes` (`id`, `post_id`, `user_id`) VALUES
 (68, 26, 16),
 (69, 36, 8),
 (70, 35, 8),
-(71, 37, 8);
+(71, 37, 8),
+(72, 40, 16);
 
 -- --------------------------------------------------------
 
@@ -302,13 +321,13 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT для таблицы `followers`
 --
 ALTER TABLE `followers`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT для таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT для таблицы `password_tokens`
@@ -320,13 +339,13 @@ ALTER TABLE `password_tokens`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT для таблицы `post_likes`
 --
 ALTER TABLE `post_likes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT для таблицы `users`

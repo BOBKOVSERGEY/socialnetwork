@@ -15,15 +15,15 @@ if (Login::isLoggedIn()) {
     Comment::createComment(Base::security($_POST['commentbody']), $_GET['commentpostid'], $userid);
   }
 
-  $followingposts = DB::query('SELECT posts.id, posts.body, posts.likes, users.`username` FROM users, posts, followers
+  $followingposts = DB::query('SELECT posts.postimg, posts.id, posts.body, posts.likes, users.`username` FROM users, posts, followers
 WHERE posts.user_id = followers.user_id
 AND users.id = posts.user_id
 AND follower_id = :userid
 ORDER BY posts.likes DESC;', [':userid' => $userid]);
-  
+
   if (!empty($followingposts)) {
     foreach ($followingposts as $post) {
-      echo $post['body'] . ' ~ ' . $post['username'] . '<br>';
+      echo $post['postimg'] . '<br>' .$post['body'] . ' ~ ' . $post['username'] . '<br>';
       echo "<form action='$_SERVER[PHP_SELF]?postid=" . $post['id'] ."' method='post'>";
 
       if (!DB::query('SELECT post_id FROM post_likes WHERE post_id=:postid AND user_id=:userid', [':postid' => $post['id'], ':userid'=>$userid])) {

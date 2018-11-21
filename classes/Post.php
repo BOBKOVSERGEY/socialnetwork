@@ -7,8 +7,11 @@ class Post
     if (strlen($postbody) > 160 || strlen($postbody) < 1) {
       die('Incorrect length!');
     }
+
+    $topics = self::getTopics($postbody);
+
     if ($loggedInUserId == $profileUserId) {
-      DB::query('INSERT INTO posts VALUES(null, :postbody, NOW(), :userid, 0, null)', [':postbody' => $postbody, ':userid' => $profileUserId]);
+      DB::query('INSERT INTO posts VALUES(null, :postbody, NOW(), :userid, 0, null, :topics)', [':postbody' => $postbody, ':userid' => $profileUserId, ':topics'=>$topics]);
       //header("Location: profile.php?username=$username");
     } else {
       die('Incorrect user');
@@ -20,8 +23,11 @@ class Post
     if (strlen($postbody) > 160) {
       die('Incorrect length!');
     }
+
+    $topics = self::getTopics($postbody);
+
     if ($loggedInUserId == $profileUserId) {
-      DB::query('INSERT INTO posts VALUES(null, :postbody, NOW(), :userid, 0, null)', [':postbody' => $postbody, ':userid' => $profileUserId]);
+      DB::query('INSERT INTO posts VALUES(null, :postbody, NOW(), :userid, 0, null, :topics)', [':postbody' => $postbody, ':userid' => $profileUserId, ':topics'=>$topics]);
       $postid = DB::query('SELECT id FROM posts WHERE user_id=:userid ORDER BY id DESC LIMIT 1', [':userid'=> $loggedInUserId])[0]['id'];
       return $postid;
     } else {
@@ -43,6 +49,37 @@ class Post
     }
   }
 
+  public static function getTopics($text) {
+    $text = explode(" ", $text);
+    $topics = "";
+    foreach ($text as $word) {
+      if (substr($word, 0, 1) == "#") {
+        $topics .= substr($word, 1).",";
+      }
+    }
+    return $topics;
+  }
+
+  public static function linkAdd($text)
+  {
+    $text = explode(' ', $text);
+    $newstring = '';
+    foreach ($text as $word) {
+
+      if (substr($word, 0, 1) == '@') {
+        $newstring .= "<a href='profile.php?username=" . substr($word, 1) . "'>" . $word . '</a> ';
+      } else if (substr($word, 0, 1) == '#') {
+        $newstring .= "<a href='topics.php?topic=" . substr($word, 1) . "'>" . $word . '</a> ';
+      } else {
+        $newstring .= $word . ' ';
+      }
+
+
+
+    }
+    return $newstring;
+  }
+
   public static function displayPosts($userid, $username, $loggedInUserId)
   {
     $dbposts = DB::query('SELECT * FROM posts WHERE user_id=:userid ORDER BY id DESC', [':userid' => $userid]);
@@ -51,17 +88,35 @@ class Post
     foreach ($dbposts as $p) {
 
       if (!DB::query('SELECT post_id FROM post_likes WHERE post_id=:postid AND user_id=:userid', [':postid' => $p['id'], ':userid'=>$loggedInUserId])) {
-        $posts .= "<img src=" . $p['postimg'] ."><br>". $p['body']."
+        if (!empty($p['postimg'])){
+          $posts .= "<img src=" . $p['postimg'] ."><br>". self::linkAdd($p['body'])."
       <form action='$_SERVER[PHP_SELF]?username=$username&postid=" . $p['id'] ."' method='post'>
     <input type='submit' name='like' value='Like'>
     <span>".$p['likes']." likes</span>
      </form><hr><br>";
+        } else {
+          $posts .= self::linkAdd($p['body'])."
+      <form action='$_SERVER[PHP_SELF]?username=$username&postid=" . $p['id'] ."' method='post'>
+    <input type='submit' name='like' value='Like'>
+    <span>".$p['likes']." likes</span>
+     </form><hr><br>";
+        }
+
       } else {
-        $posts .= "<img src=" . $p['postimg'] ."><br>" . $p['body']."
+        if (!empty($p['postimg'])){
+          $posts .= "<img src=" . $p['postimg'] ."><br>" . self::linkAdd($p['body'])."
       <form action='$_SERVER[PHP_SELF]?username=$username&postid=" . $p['id'] ."' method='post'>
     <input type='submit' name='unlike' value='Unlike'>
     <span>".$p['likes']." likes</span>
      </form><hr><br>";
+        } else {
+          $posts .= self::linkAdd($p['body'])."
+      <form action='$_SERVER[PHP_SELF]?username=$username&postid=" . $p['id'] ."' method='post'>
+    <input type='submit' name='unlike' value='Unlike'>
+    <span>".$p['likes']." likes</span>
+     </form><hr><br>";
+        }
+
       }
 
     }
