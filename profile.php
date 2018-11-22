@@ -26,6 +26,7 @@ if (isset($_GET['username'])) {
         $isFollowing = true;
       }
     }
+
     if (isset($_POST['unfollow'])) {
       if ($userid != $followerid) {
         if (DB::query('SELECT follower_id FROM followers WHERE user_id=:userid AND follower_id=:followerid', [':userid' => $userid, ':followerid' => $followerid])) {
@@ -37,8 +38,19 @@ if (isset($_GET['username'])) {
         $isFollowing = false;
       }
     }
+
     if (DB::query('SELECT follower_id FROM followers WHERE user_id=:userid AND follower_id=:followerid', [':userid' => $userid, ':followerid' => $followerid])) {
       $isFollowing = true;
+    }
+
+    if (isset($_POST['deletepost'])) {
+      if (DB::query('SELECT id FROM posts WHERE id=:postid AND user_id=:userid', [':postid' => $_GET['postid'], ':userid' => $followerid])) {
+        DB::query('DELETE FROM posts WHERE id=:postid AND user_id=:userid',[':postid'=> $_GET['postid'], ':userid' => $followerid]);
+        DB::query('DELETE FROM post_likes WHERE post_id=:postid',[':postid'=> $_GET['postid']]);
+        echo 'Post deleted';
+      } else {
+        echo 'Something wrong!';
+      }
     }
 
     if (isset($_POST['post'])) {
@@ -50,7 +62,7 @@ if (isset($_GET['username'])) {
       }
     }
 
-    if (isset($_GET['postid'])) {
+    if (isset($_GET['postid']) && !isset($_POST['deletepost'])) {
       Post::likePost($_GET['postid'], $followerid);
     }
 

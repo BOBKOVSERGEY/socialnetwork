@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 21 2018 г., 16:22
+-- Время создания: Ноя 22 2018 г., 14:02
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -58,7 +58,12 @@ INSERT INTO `comments` (`id`, `comment`, `user_id`, `posted_at`, `post_id`) VALU
 (15, '16.11', 16, '2018-11-16 16:52:45', 22),
 (16, 'Hello Vika', 12, '2018-11-16 17:01:46', 12),
 (17, '7', 8, '2018-11-16 17:13:27', 12),
-(18, '7', 8, '2018-11-16 17:13:39', 12);
+(18, '7', 8, '2018-11-16 17:13:39', 12),
+(19, 'some', 16, '2018-11-22 12:12:01', 9),
+(20, 'some', 16, '2018-11-22 12:12:23', 26),
+(21, 'any', 16, '2018-11-22 12:12:32', 26),
+(22, 'some', 16, '2018-11-22 13:04:49', 25),
+(23, 'some', 16, '2018-11-22 13:05:36', 24);
 
 -- --------------------------------------------------------
 
@@ -104,7 +109,29 @@ CREATE TABLE `login_tokens` (
 --
 
 INSERT INTO `login_tokens` (`id`, `token`, `user_id`) VALUES
-(32, 'f36ac28a56039aa058d3323cc61fee05cf1b2eea', 16);
+(1, 'f7d2b5941faf1587f08668e18d77854f53d3d465', 16);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `type` int(11) UNSIGNED NOT NULL,
+  `receiver` int(10) UNSIGNED NOT NULL,
+  `sender` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `type`, `receiver`, `sender`) VALUES
+(1, 1, 8, 16),
+(2, 1, 12, 16),
+(3, 1, 16, 16);
 
 -- --------------------------------------------------------
 
@@ -146,8 +173,6 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (8, 'alert(\'hello)', '2018-11-13 15:59:21', 12, 0, NULL, NULL),
 (9, 'alert(\'hello)', '2018-11-13 16:02:33', 12, 2, NULL, NULL),
 (10, 'e', '2018-11-13 16:02:53', 12, 1, NULL, NULL),
-(11, 'hello', '2018-11-14 12:41:53', 16, 1, NULL, NULL),
-(12, 'some', '2018-11-14 12:43:22', 16, 6, NULL, NULL),
 (13, 'new', '2018-11-14 13:21:35', 16, 1, NULL, NULL),
 (14, 'rrrrrrrrrrrrr', '2018-11-14 13:29:27', 16, 1, NULL, NULL),
 (15, 'rrrrrrrrrrrrr', '2018-11-14 13:42:29', 16, 0, NULL, NULL),
@@ -159,7 +184,7 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (21, 'some new', '2018-11-14 14:32:20', 8, 0, NULL, NULL),
 (22, 'New post from Post.php', '2018-11-15 13:51:02', 8, 0, NULL, NULL),
 (23, 'New post from Post.php', '2018-11-15 13:51:17', 8, 1, NULL, NULL),
-(24, 'fffffffffffff', '2018-11-15 13:53:54', 8, 1, NULL, NULL),
+(24, 'fffffffffffff', '2018-11-15 13:53:54', 8, 2, NULL, NULL),
 (25, 'some', '2018-11-15 13:54:43', 8, 1, NULL, NULL),
 (26, 'some yet', '2018-11-15 14:12:36', 8, 2, NULL, NULL),
 (27, 'already', '2018-11-15 14:17:57', 8, 0, NULL, NULL),
@@ -170,23 +195,14 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (32, 'dddddddddddddddddddddd', '2018-11-20 15:59:06', 8, 0, NULL, NULL),
 (33, '', '2018-11-20 15:59:14', 8, 0, NULL, NULL),
 (34, 'some new', '2018-11-20 16:17:05', 8, 0, NULL, NULL),
-(37, 'some', '2018-11-20 16:36:47', 8, 1, 'https://i.imgur.com/9EOBIaF.png', NULL),
+(37, 'some', '2018-11-20 16:36:47', 8, 2, 'https://i.imgur.com/9EOBIaF.png', NULL),
 (38, 'dddddddd', '2018-11-21 14:46:11', 16, 0, NULL, NULL),
-(39, 'some', '2018-11-21 14:46:29', 16, 0, NULL, NULL),
-(40, '', '2018-11-21 14:53:29', 16, 1, 'https://i.imgur.com/D0CsXBc.jpg', NULL),
-(41, '@sitesDevelopment Hello, world!', '2018-11-21 14:54:42', 16, 0, NULL, NULL),
-(46, '@new some', '2018-11-21 15:12:45', 16, 0, NULL, NULL),
-(47, 'some', '2018-11-21 15:12:56', 16, 0, NULL, NULL),
-(48, 'alert(\'\'hello)', '2018-11-21 15:15:47', 16, 0, NULL, NULL),
-(49, 'alert(\'\'hello)', '2018-11-21 15:20:10', 16, 0, NULL, NULL),
-(50, '@Vasy Some say', '2018-11-21 15:24:45', 16, 0, NULL, NULL),
-(51, '@Vika kkkk', '2018-11-21 15:25:26', 16, 0, NULL, NULL),
-(52, 'somу #PHP', '2018-11-21 15:34:14', 16, 0, NULL, NULL),
-(53, 'say @Vika', '2018-11-21 15:34:25', 16, 0, NULL, NULL),
-(54, 'post', '2018-11-21 15:49:34', 16, 0, NULL, ''),
-(56, '#PHP', '2018-11-21 15:51:00', 16, 0, 'https://i.imgur.com/lRy4rie.jpg', 'PHP,'),
-(58, 'Hello world #PHP #JAVASCRIP', '2018-11-21 15:54:15', 16, 0, NULL, 'PHP,JAVASCRIP,'),
-(59, 'Hello #Scala some? some', '2018-11-21 15:55:35', 16, 0, NULL, 'Scala,');
+(51, '@Vika kkkk', '2018-11-21 15:25:26', 16, 1, NULL, NULL),
+(60, '@Sergey Developer', '2018-11-22 12:59:54', 16, 0, NULL, ''),
+(61, '#PHP Developers', '2018-11-22 13:00:26', 16, 0, NULL, 'PHP,'),
+(62, '@Sergey Hello', '2018-11-22 13:53:52', 16, 0, NULL, ''),
+(63, '@Vasy  hello', '2018-11-22 13:58:59', 16, 0, NULL, ''),
+(64, '@Vika some', '2018-11-22 14:00:08', 16, 0, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -208,7 +224,6 @@ INSERT INTO `post_likes` (`id`, `post_id`, `user_id`) VALUES
 (8, 13, 16),
 (9, 10, 12),
 (10, 9, 12),
-(15, 11, 16),
 (32, 16, 16),
 (34, 14, 16),
 (37, 9, 16),
@@ -221,7 +236,23 @@ INSERT INTO `post_likes` (`id`, `post_id`, `user_id`) VALUES
 (69, 36, 8),
 (70, 35, 8),
 (71, 37, 8),
-(72, 40, 16);
+(76, 50, 16),
+(77, 52, 16),
+(79, 59, 16),
+(80, 41, 16),
+(81, 46, 16),
+(82, 47, 16),
+(83, 11, 16),
+(84, 58, 16),
+(85, 56, 16),
+(86, 48, 16),
+(87, 40, 16),
+(89, 49, 16),
+(91, 53, 16),
+(96, 51, 16),
+(100, 39, 16),
+(103, 37, 16),
+(104, 24, 16);
 
 -- --------------------------------------------------------
 
@@ -279,6 +310,12 @@ ALTER TABLE `login_tokens`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Индексы таблицы `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `password_tokens`
 --
 ALTER TABLE `password_tokens`
@@ -315,7 +352,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT для таблицы `followers`
@@ -327,7 +364,13 @@ ALTER TABLE `followers`
 -- AUTO_INCREMENT для таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT для таблицы `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `password_tokens`
@@ -339,13 +382,13 @@ ALTER TABLE `password_tokens`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT для таблицы `post_likes`
 --
 ALTER TABLE `post_likes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
@@ -356,12 +399,6 @@ ALTER TABLE `users`
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
-
---
--- Ограничения внешнего ключа таблицы `comments`
---
-ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `login_tokens`
@@ -385,7 +422,6 @@ ALTER TABLE `posts`
 -- Ограничения внешнего ключа таблицы `post_likes`
 --
 ALTER TABLE `post_likes`
-  ADD CONSTRAINT `post_likes_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`),
   ADD CONSTRAINT `post_likes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 

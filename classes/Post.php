@@ -11,6 +11,19 @@ class Post
     $topics = self::getTopics($postbody);
 
     if ($loggedInUserId == $profileUserId) {
+
+      if (count(self::notify($postbody)) != 0) {
+        foreach (self::notify($postbody) as $key => $n) {
+          $s = $loggedInUserId;
+          $r = DB::query('SELECT id FROM users WHERE username=:username', [':username' => $key])[0]['id'];
+
+          if ($r != 0) {
+            DB::query('INSERT INTO notifications VALUES (null, :type, :receiver, :sender)', [':type' => $n, ':receiver' => $r, ':sender' => $s]);
+          }
+
+        }
+      }
+
       DB::query('INSERT INTO posts VALUES(null, :postbody, NOW(), :userid, 0, null, :topics)', [':postbody' => $postbody, ':userid' => $profileUserId, ':topics'=>$topics]);
       //header("Location: profile.php?username=$username");
     } else {
@@ -60,12 +73,23 @@ class Post
     return $topics;
   }
 
+  public static function notify($text)
+  {
+    $text = explode(' ', $text);
+    $notify = [];
+    foreach ($text as $word) {
+      if (substr($word, 0, 1) == '@') {
+        $notify[substr($word,1)] = 1;
+      }
+    }
+    return $notify;
+  }
+
   public static function linkAdd($text)
   {
     $text = explode(' ', $text);
     $newstring = '';
     foreach ($text as $word) {
-
       if (substr($word, 0, 1) == '@') {
         $newstring .= "<a href='profile.php?username=" . substr($word, 1) . "'>" . $word . '</a> ';
       } else if (substr($word, 0, 1) == '#') {
@@ -73,9 +97,6 @@ class Post
       } else {
         $newstring .= $word . ' ';
       }
-
-
-
     }
     return $newstring;
   }
@@ -90,31 +111,51 @@ class Post
       if (!DB::query('SELECT post_id FROM post_likes WHERE post_id=:postid AND user_id=:userid', [':postid' => $p['id'], ':userid'=>$loggedInUserId])) {
         if (!empty($p['postimg'])){
           $posts .= "<img src=" . $p['postimg'] ."><br>". self::linkAdd($p['body'])."
-      <form action='$_SERVER[PHP_SELF]?username=$username&postid=" . $p['id'] ."' method='post'>
-    <input type='submit' name='like' value='Like'>
-    <span>".$p['likes']." likes</span>
-     </form><hr><br>";
+          <form action='$_SERVER[PHP_SELF]?username=$username&postid=" . $p['id'] ."' method='post'>
+            <input type='submit' name='like' value='Like'>
+            <span>".$p['likes']." likes</span>";
+
+          if ($userid == $loggedInUserId) {
+            $posts .= " <input type='submit' name='deletepost' value='&times;'>";
+          }
+
+          $posts .="</form><hr><br>";
         } else {
           $posts .= self::linkAdd($p['body'])."
-      <form action='$_SERVER[PHP_SELF]?username=$username&postid=" . $p['id'] ."' method='post'>
-    <input type='submit' name='like' value='Like'>
-    <span>".$p['likes']." likes</span>
-     </form><hr><br>";
+          <form action='$_SERVER[PHP_SELF]?username=$username&postid=" . $p['id'] ."' method='post'>
+            <input type='submit' name='like' value='Like'>
+            <span>".$p['likes']." likes</span>";
+
+          if ($userid == $loggedInUserId) {
+            $posts .= " <input type='submit' name='deletepost' value='&times;'>";
+          }
+
+          $posts .= "</form><hr><br>";
         }
 
       } else {
         if (!empty($p['postimg'])){
           $posts .= "<img src=" . $p['postimg'] ."><br>" . self::linkAdd($p['body'])."
-      <form action='$_SERVER[PHP_SELF]?username=$username&postid=" . $p['id'] ."' method='post'>
-    <input type='submit' name='unlike' value='Unlike'>
-    <span>".$p['likes']." likes</span>
-     </form><hr><br>";
+          <form action='$_SERVER[PHP_SELF]?username=$username&postid=" . $p['id'] ."' method='post'>
+            <input type='submit' name='unlike' value='Unlike'>
+            <span>".$p['likes']." likes</span>";
+
+          if ($userid == $loggedInUserId) {
+            $posts .= " <input type='submit' name='deletepost' value='&times;'>";
+          }
+
+          $posts .= "</form><hr><br>";
         } else {
           $posts .= self::linkAdd($p['body'])."
-      <form action='$_SERVER[PHP_SELF]?username=$username&postid=" . $p['id'] ."' method='post'>
-    <input type='submit' name='unlike' value='Unlike'>
-    <span>".$p['likes']." likes</span>
-     </form><hr><br>";
+          <form action='$_SERVER[PHP_SELF]?username=$username&postid=" . $p['id'] ."' method='post'>
+            <input type='submit' name='unlike' value='Unlike'>
+            <span>".$p['likes']." likes</span>";
+
+          if ($userid == $loggedInUserId) {
+            $posts .= " <input type='submit' name='deletepost' value='&times;'>";
+          }
+
+          $posts .= "</form><hr><br>";
         }
 
       }
