@@ -12,13 +12,13 @@ class Post
 
     if ($loggedInUserId == $profileUserId) {
 
-      if (count(self::notify($postbody)) != 0) {
-        foreach (self::notify($postbody) as $key => $n) {
+      if (count(Notify::createNotify($postbody)) != 0) {
+        foreach (Notify::createNotify($postbody) as $key => $n) {
           $s = $loggedInUserId;
           $r = DB::query('SELECT id FROM users WHERE username=:username', [':username' => $key])[0]['id'];
 
           if ($r != 0) {
-            DB::query('INSERT INTO notifications VALUES (null, :type, :receiver, :sender)', [':type' => $n, ':receiver' => $r, ':sender' => $s]);
+            DB::query('INSERT INTO notifications VALUES (null, :type, :receiver, :sender, :extra)', [':type' => $n['type'], ':receiver' => $r, ':sender' => $s, ':extra'=>$n['extra']]);
           }
 
         }
@@ -40,6 +40,19 @@ class Post
     $topics = self::getTopics($postbody);
 
     if ($loggedInUserId == $profileUserId) {
+
+      if (count(Notify::createNotify($postbody)) != 0) {
+        foreach (Notify::createNotify($postbody) as $key => $n) {
+          $s = $loggedInUserId;
+          $r = DB::query('SELECT id FROM users WHERE username=:username', [':username' => $key])[0]['id'];
+
+          if ($r != 0) {
+            DB::query('INSERT INTO notifications VALUES (null, :type, :receiver, :sender, :extra)', [':type' => $n['type'], ':receiver' => $r, ':sender' => $s, ':extra'=>$n['extra']]);
+          }
+
+        }
+      }
+
       DB::query('INSERT INTO posts VALUES(null, :postbody, NOW(), :userid, 0, null, :topics)', [':postbody' => $postbody, ':userid' => $profileUserId, ':topics'=>$topics]);
       $postid = DB::query('SELECT id FROM posts WHERE user_id=:userid ORDER BY id DESC LIMIT 1', [':userid'=> $loggedInUserId])[0]['id'];
       return $postid;
@@ -53,6 +66,7 @@ class Post
     if (!DB::query('SELECT user_id FROM post_likes WHERE post_id=:postid AND user_id=:userid', [':postid' => $postid, ':userid' => $likerId])) {
       DB::query('UPDATE posts SET likes=likes+1 WHERE id=:postid', [':postid' => $postid]);
       DB::query('INSERT INTO post_likes VALUES (null, :postid, :userid)', [':postid' => $postid, ':userid' => $likerId]);
+      Notify::createNotify('', $postid);
       //header("Location: profile.php?username=$username");
     } else {
       DB::query('UPDATE posts SET likes=likes-1 WHERE id=:postid', [':postid' => $postid]);
@@ -71,18 +85,6 @@ class Post
       }
     }
     return $topics;
-  }
-
-  public static function notify($text)
-  {
-    $text = explode(' ', $text);
-    $notify = [];
-    foreach ($text as $word) {
-      if (substr($word, 0, 1) == '@') {
-        $notify[substr($word,1)] = 1;
-      }
-    }
-    return $notify;
   }
 
   public static function linkAdd($text)

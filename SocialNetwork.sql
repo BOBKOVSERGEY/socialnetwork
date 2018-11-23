@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 22 2018 г., 14:02
+-- Время создания: Ноя 23 2018 г., 16:40
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -121,17 +121,23 @@ CREATE TABLE `notifications` (
   `id` int(11) UNSIGNED NOT NULL,
   `type` int(11) UNSIGNED NOT NULL,
   `receiver` int(10) UNSIGNED NOT NULL,
-  `sender` int(11) UNSIGNED NOT NULL
+  `sender` int(11) UNSIGNED NOT NULL,
+  `extra` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `notifications`
 --
 
-INSERT INTO `notifications` (`id`, `type`, `receiver`, `sender`) VALUES
-(1, 1, 8, 16),
-(2, 1, 12, 16),
-(3, 1, 16, 16);
+INSERT INTO `notifications` (`id`, `type`, `receiver`, `sender`, `extra`) VALUES
+(1, 1, 8, 16, NULL),
+(2, 1, 12, 16, NULL),
+(3, 1, 16, 16, NULL),
+(4, 1, 16, 16, NULL),
+(7, 1, 16, 16, '{ \"postbody\" : \"@vika json some\" }'),
+(8, 1, 16, 16, '{ \"postbody\" : \"@Vika some new create notify Method \'\'\' some\'\" }'),
+(9, 1, 16, 16, '{ \"postbody\" : \"@vika six\" }'),
+(10, 2, 16, 16, '');
 
 -- --------------------------------------------------------
 
@@ -185,24 +191,30 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (22, 'New post from Post.php', '2018-11-15 13:51:02', 8, 0, NULL, NULL),
 (23, 'New post from Post.php', '2018-11-15 13:51:17', 8, 1, NULL, NULL),
 (24, 'fffffffffffff', '2018-11-15 13:53:54', 8, 2, NULL, NULL),
-(25, 'some', '2018-11-15 13:54:43', 8, 1, NULL, NULL),
-(26, 'some yet', '2018-11-15 14:12:36', 8, 2, NULL, NULL),
+(25, 'some', '2018-11-15 13:54:43', 8, 2, NULL, NULL),
+(26, 'some yet', '2018-11-15 14:12:36', 8, 3, NULL, NULL),
 (27, 'already', '2018-11-15 14:17:57', 8, 0, NULL, NULL),
-(28, 'e', '2018-11-16 16:35:03', 8, 0, NULL, NULL),
+(28, 'e', '2018-11-16 16:35:03', 8, 1, NULL, NULL),
 (29, 'eeeeeeeeeee', '2018-11-16 16:57:57', 12, 0, NULL, NULL),
 (30, 'Все привет', '2018-11-16 16:59:32', 12, 0, NULL, NULL),
-(31, 'some', '2018-11-20 15:39:16', 8, 0, NULL, NULL),
-(32, 'dddddddddddddddddddddd', '2018-11-20 15:59:06', 8, 0, NULL, NULL),
-(33, '', '2018-11-20 15:59:14', 8, 0, NULL, NULL),
-(34, 'some new', '2018-11-20 16:17:05', 8, 0, NULL, NULL),
-(37, 'some', '2018-11-20 16:36:47', 8, 2, 'https://i.imgur.com/9EOBIaF.png', NULL),
-(38, 'dddddddd', '2018-11-21 14:46:11', 16, 0, NULL, NULL),
+(31, 'some', '2018-11-20 15:39:16', 8, 1, NULL, NULL),
+(32, 'dddddddddddddddddddddd', '2018-11-20 15:59:06', 8, 1, NULL, NULL),
+(33, '', '2018-11-20 15:59:14', 8, 1, NULL, NULL),
+(34, 'some new', '2018-11-20 16:17:05', 8, 1, NULL, NULL),
+(37, 'some', '2018-11-20 16:36:47', 8, 3, 'https://i.imgur.com/9EOBIaF.png', NULL),
+(38, 'dddddddd', '2018-11-21 14:46:11', 16, 1, NULL, NULL),
 (51, '@Vika kkkk', '2018-11-21 15:25:26', 16, 1, NULL, NULL),
 (60, '@Sergey Developer', '2018-11-22 12:59:54', 16, 0, NULL, ''),
 (61, '#PHP Developers', '2018-11-22 13:00:26', 16, 0, NULL, 'PHP,'),
 (62, '@Sergey Hello', '2018-11-22 13:53:52', 16, 0, NULL, ''),
 (63, '@Vasy  hello', '2018-11-22 13:58:59', 16, 0, NULL, ''),
-(64, '@Vika some', '2018-11-22 14:00:08', 16, 0, NULL, '');
+(64, '@Vika some', '2018-11-22 14:00:08', 16, 0, NULL, ''),
+(65, '@vika any', '2018-11-23 14:41:41', 16, 1, NULL, ''),
+(67, '@vika Hello World', '2018-11-23 14:54:17', 16, 1, NULL, ''),
+(69, '', '2018-11-23 14:57:18', 16, 1, 'https://i.imgur.com/b0Yeied.jpg', ''),
+(70, '@vika json some', '2018-11-23 15:15:04', 16, 2, NULL, ''),
+(71, '@Vika some new create notify Method \'\'\' some\'', '2018-11-23 15:32:25', 16, 2, NULL, ''),
+(72, '@vika six', '2018-11-23 15:33:10', 16, 2, 'https://i.imgur.com/s2crzOv.jpg', '');
 
 -- --------------------------------------------------------
 
@@ -221,38 +233,20 @@ CREATE TABLE `post_likes` (
 --
 
 INSERT INTO `post_likes` (`id`, `post_id`, `user_id`) VALUES
-(8, 13, 16),
-(9, 10, 12),
-(10, 9, 12),
-(32, 16, 16),
-(34, 14, 16),
-(37, 9, 16),
-(38, 20, 16),
-(48, 23, 8),
-(52, 26, 8),
-(53, 25, 8),
-(54, 24, 8),
-(68, 26, 16),
-(69, 36, 8),
-(70, 35, 8),
-(71, 37, 8),
-(76, 50, 16),
-(77, 52, 16),
-(79, 59, 16),
-(80, 41, 16),
-(81, 46, 16),
-(82, 47, 16),
-(83, 11, 16),
-(84, 58, 16),
-(85, 56, 16),
-(86, 48, 16),
-(87, 40, 16),
-(89, 49, 16),
-(91, 53, 16),
-(96, 51, 16),
-(100, 39, 16),
-(103, 37, 16),
-(104, 24, 16);
+(113, 72, 16),
+(114, 70, 16),
+(115, 38, 16),
+(116, 34, 16),
+(117, 33, 16),
+(118, 37, 16),
+(119, 71, 16),
+(120, 32, 16),
+(121, 31, 16),
+(122, 28, 16),
+(123, 26, 16),
+(124, 25, 16),
+(125, 67, 16),
+(126, 65, 16);
 
 -- --------------------------------------------------------
 
@@ -370,7 +364,7 @@ ALTER TABLE `login_tokens`
 -- AUTO_INCREMENT для таблицы `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `password_tokens`
@@ -382,13 +376,13 @@ ALTER TABLE `password_tokens`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT для таблицы `post_likes`
 --
 ALTER TABLE `post_likes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
