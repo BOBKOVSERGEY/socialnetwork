@@ -4,7 +4,7 @@ require __DIR__ . '/init.php';
 if (Login::isLoggedIn()) {
   $userid = Login::isLoggedIn();
 } else {
-  echo 'Not loginIn!';
+  die('Not loginIn!');
 }
 
 echo '<h1>Notifications</h1>';

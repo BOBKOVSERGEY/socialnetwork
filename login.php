@@ -13,6 +13,7 @@ if (isset($_POST['login'])) {
       DB::query('INSERT INTO login_tokens VALUES (null, :token, :user_id)', [':token' => sha1($token), ':user_id' => $user_id]);
       setcookie("SNID", $token, time() + 60 * 60 * 24 * 7, '/', NULL, NULL, TRUE);
       setcookie("SNID_", '1', time() + 60 * 60 * 24 * 3, '/', NULL, NULL, TRUE);
+      header('Location: index.php');
       echo 'Login In!';
 
     } else {
