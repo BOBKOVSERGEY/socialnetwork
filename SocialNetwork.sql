@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 23 2018 г., 16:40
+-- Время создания: Ноя 26 2018 г., 13:56
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -109,7 +109,32 @@ CREATE TABLE `login_tokens` (
 --
 
 INSERT INTO `login_tokens` (`id`, `token`, `user_id`) VALUES
-(1, 'f7d2b5941faf1587f08668e18d77854f53d3d465', 16);
+(4, '613ce7ad7709cc4e4c97af73e53e5fde9a407dd8', 8);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `body` text NOT NULL,
+  `sender` int(11) UNSIGNED NOT NULL,
+  `receiver` int(11) UNSIGNED NOT NULL,
+  `watched` tinyint(1) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `messages`
+--
+
+INSERT INTO `messages` (`id`, `body`, `sender`, `receiver`, `watched`) VALUES
+(1, 'hello, Kira! How are You?', 8, 10, 0),
+(2, 'My name is Sergey', 8, 10, 0),
+(3, 'alert(\'push)', 8, 10, 0),
+(4, 'Hey Kira', 8, 10, 0),
+(5, 'Hey kira', 8, 10, 0);
 
 -- --------------------------------------------------------
 
@@ -304,6 +329,12 @@ ALTER TABLE `login_tokens`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Индексы таблицы `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `notifications`
 --
 ALTER TABLE `notifications`
@@ -358,7 +389,13 @@ ALTER TABLE `followers`
 -- AUTO_INCREMENT для таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT для таблицы `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `notifications`
