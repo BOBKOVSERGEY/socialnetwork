@@ -8,9 +8,11 @@ if (isset($_POST['confirm'])) {
 
   if (isset($_POST['alldevices'])) {
     DB::query('DELETE FROM login_tokens WHERE user_id=:userid', [':userid' => Login::isLoggedIn()]);
+    header('Location: login.php');
   } else {
     if (isset($_COOKIE['SNID'])) {
       DB::query('DELETE FROM login_tokens WHERE token=:token', [':token' => sha1($_COOKIE['SNID'])]);
+      header('Location: login.php');
     }
     setcookie('SNID', '1', time() - 3600);
     setcookie('SNID_', '1', time() - 3600);

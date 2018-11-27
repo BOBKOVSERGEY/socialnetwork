@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 26 2018 г., 13:56
+-- Время создания: Ноя 27 2018 г., 16:41
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -63,7 +63,8 @@ INSERT INTO `comments` (`id`, `comment`, `user_id`, `posted_at`, `post_id`) VALU
 (20, 'some', 16, '2018-11-22 12:12:23', 26),
 (21, 'any', 16, '2018-11-22 12:12:32', 26),
 (22, 'some', 16, '2018-11-22 13:04:49', 25),
-(23, 'some', 16, '2018-11-22 13:05:36', 24);
+(23, 'some', 16, '2018-11-22 13:05:36', 24),
+(24, 'hey', 8, '2018-11-27 12:19:22', 38);
 
 -- --------------------------------------------------------
 
@@ -109,7 +110,7 @@ CREATE TABLE `login_tokens` (
 --
 
 INSERT INTO `login_tokens` (`id`, `token`, `user_id`) VALUES
-(4, '613ce7ad7709cc4e4c97af73e53e5fde9a407dd8', 8);
+(14, '2936b14435cb8fc5819944ff04b8f4e06243a124', 12);
 
 -- --------------------------------------------------------
 
@@ -134,7 +135,21 @@ INSERT INTO `messages` (`id`, `body`, `sender`, `receiver`, `watched`) VALUES
 (2, 'My name is Sergey', 8, 10, 0),
 (3, 'alert(\'push)', 8, 10, 0),
 (4, 'Hey Kira', 8, 10, 0),
-(5, 'Hey kira', 8, 10, 0);
+(5, 'Hey kira', 8, 10, 0),
+(6, 'Hey! how are you?', 8, 10, 0),
+(11, 'new message', 8, 10, 0),
+(12, '1', 8, 10, 0),
+(13, 'Hello Sergey', 10, 10, 0),
+(14, 'Hello Kira? my name is vasy', 12, 10, 1),
+(15, 'Hello Vasy my name is Kira', 10, 12, 0),
+(16, 'hi Sergey, how are You', 10, 10, 0),
+(17, 'hi Sergey how are you&', 10, 8, 1),
+(18, 'How are you Kira', 12, 10, 1),
+(19, 'am fine? how are you?', 12, 12, 0),
+(20, 'it\'s ok, how are you?', 10, 12, 0),
+(21, 'am fine, let\'s go walk', 12, 10, 0),
+(22, 'hello Vika, how are you?', 12, 16, 1),
+(23, 'Vika, you\'re cool', 12, 16, 1);
 
 -- --------------------------------------------------------
 
@@ -377,7 +392,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT для таблицы `followers`
@@ -389,13 +404,13 @@ ALTER TABLE `followers`
 -- AUTO_INCREMENT для таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT для таблицы `notifications`
