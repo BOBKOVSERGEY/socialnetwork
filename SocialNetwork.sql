@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 28 2018 г., 15:39
+-- Время создания: Ноя 28 2018 г., 16:27
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -104,6 +104,17 @@ CREATE TABLE `login_tokens` (
   `token` char(64) NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `login_tokens`
+--
+
+INSERT INTO `login_tokens` (`id`, `token`, `user_id`) VALUES
+(17, '4e8177c61a7b6226e6f73463453e115f0f8d58fb', 8),
+(18, '17ef019acfb7ac386bf14e8fb1898152826d5179', 8),
+(19, '9c3f692bb6dcdb36f555ca61d69ba07e95de3752', 8),
+(20, '40a8380b5df87f20c506ac0971ef95bbc72ae1d5', 8),
+(21, '570a557a5cc750b1caa6dee1662e484b83199578', 8);
 
 -- --------------------------------------------------------
 
@@ -405,7 +416,7 @@ ALTER TABLE `followers`
 -- AUTO_INCREMENT для таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
