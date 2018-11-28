@@ -34,8 +34,10 @@ if (Login::isLoggedIn()) {
         if ($newpassword == $newpasswordrepeat) {
           if (strlen($newpassword) >= 6 && strlen($newpassword) <= 60) {
             DB::query('UPDATE users SET password=:newpassword WHERE id=:userid', [':newpassword' => password_hash($newpassword, PASSWORD_BCRYPT), ':userid' => $userid]);
-            echo 'Password change successfully!';
+
             DB::query('DELETE FROM password_tokens WHERE user_id=:userid', [':userid' => $userid]);
+            echo 'Password change successfully!';
+
           } else {
             echo 'Password invalid!';
           }

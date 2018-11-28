@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 27 2018 г., 16:41
+-- Время создания: Ноя 28 2018 г., 15:39
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -105,13 +105,6 @@ CREATE TABLE `login_tokens` (
   `user_id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Дамп данных таблицы `login_tokens`
---
-
-INSERT INTO `login_tokens` (`id`, `token`, `user_id`) VALUES
-(14, '2936b14435cb8fc5819944ff04b8f4e06243a124', 12);
-
 -- --------------------------------------------------------
 
 --
@@ -177,7 +170,9 @@ INSERT INTO `notifications` (`id`, `type`, `receiver`, `sender`, `extra`) VALUES
 (7, 1, 16, 16, '{ \"postbody\" : \"@vika json some\" }'),
 (8, 1, 16, 16, '{ \"postbody\" : \"@Vika some new create notify Method \'\'\' some\'\" }'),
 (9, 1, 16, 16, '{ \"postbody\" : \"@vika six\" }'),
-(10, 2, 16, 16, '');
+(10, 2, 16, 16, ''),
+(11, 2, 12, 12, ''),
+(12, 2, 12, 12, '');
 
 -- --------------------------------------------------------
 
@@ -236,7 +231,7 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (27, 'already', '2018-11-15 14:17:57', 8, 0, NULL, NULL),
 (28, 'e', '2018-11-16 16:35:03', 8, 1, NULL, NULL),
 (29, 'eeeeeeeeeee', '2018-11-16 16:57:57', 12, 0, NULL, NULL),
-(30, 'Все привет', '2018-11-16 16:59:32', 12, 0, NULL, NULL),
+(30, 'Все привет', '2018-11-16 16:59:32', 12, 1, NULL, NULL),
 (31, 'some', '2018-11-20 15:39:16', 8, 1, NULL, NULL),
 (32, 'dddddddddddddddddddddd', '2018-11-20 15:59:06', 8, 1, NULL, NULL),
 (33, '', '2018-11-20 15:59:14', 8, 1, NULL, NULL),
@@ -254,7 +249,10 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (69, '', '2018-11-23 14:57:18', 16, 1, 'https://i.imgur.com/b0Yeied.jpg', ''),
 (70, '@vika json some', '2018-11-23 15:15:04', 16, 2, NULL, ''),
 (71, '@Vika some new create notify Method \'\'\' some\'', '2018-11-23 15:32:25', 16, 2, NULL, ''),
-(72, '@vika six', '2018-11-23 15:33:10', 16, 2, 'https://i.imgur.com/s2crzOv.jpg', '');
+(72, '@vika six', '2018-11-23 15:33:10', 16, 2, 'https://i.imgur.com/s2crzOv.jpg', ''),
+(73, 'hello', '2018-11-28 12:16:29', 12, 0, NULL, ''),
+(74, '', '2018-11-28 12:16:49', 12, 0, NULL, ''),
+(75, '', '2018-11-28 12:17:09', 12, 1, 'https://i.imgur.com/QpdxMwL.png', '');
 
 -- --------------------------------------------------------
 
@@ -286,7 +284,9 @@ INSERT INTO `post_likes` (`id`, `post_id`, `user_id`) VALUES
 (123, 26, 16),
 (124, 25, 16),
 (125, 67, 16),
-(126, 65, 16);
+(126, 65, 16),
+(127, 30, 12),
+(128, 75, 12);
 
 -- --------------------------------------------------------
 
@@ -310,12 +310,13 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `verified`, `profileimg`) VALUES
 (8, 'Sergey', '$2y$10$Sb7DtRyvi5YDTlD.zOWJUOPsP81Oa.4xzcT31mjNB0odisPeteROK', 'sergey_bobkov@inbox.ru', 1, 'https://i.imgur.com/QWotl5x.jpg'),
 (10, 'Kira', '$2y$10$bgA2eRCAWdZlYAoSmEuYPOiOEOTclzeMXgzv7DwYoMg3reVZT0tO2', 'taran.kira@rambler.ru', 1, NULL),
-(12, 'Vasy', '$2y$10$jW.yZeVrrpuSMvF86jBViOJRr8HP097awdd4Easf2Rd6hKsR9R9zS', 'pochta@pktitan.ru', 0, NULL),
+(12, 'Vasy', '$2y$10$82IkeD322F1Xqs8L2vFfU.TiEySkgAWiXb3zsm4IEfSo0GOtWglfq', 'pochta@pktitan.ru', 0, NULL),
 (13, 'Vasy1', '$2y$10$tuTAsY15oKrhzxpQkLci5ujXNnGXVTXse1ZxkspxXiOZ4g7pqjHO.', 'pochta1@pktitan.ru', 0, NULL),
 (14, 'Verified', '$2y$10$ShpIEeTLaipYTA6N4uoXhupgmE.FZqeIXtjinZy6VzcgG4GBTBD6.', 'verified@gmail.com', 0, NULL),
 (15, 'alert(\'hello)', '$2y$10$Z7bgQ5XEEup7wNh9T5LnJO5N.Rm9S4HYy/kqNBGX7CguZwPfL/Vke', 'vzlk@yandex.ru', 0, NULL),
 (16, 'Vika', '$2y$10$fVKElmVNUMZsfiPobHr4UuUZYge5Jf.FPSm18C39bu.NzCvFxGslK', 'pktitanseo@yandex.ru', 0, NULL),
-(17, 'SergeyBobkov', '$2y$10$ZpeBzRq3QGLs1xK4vpeYQOtW4mRxIaqXmcQ5j8PcH5QxZb4TJhxtm', 'bobkovsergeyarkadevich@gmail.com', 0, 'https://i.imgur.com/kcLu8VU.jpg');
+(17, 'SergeyBobkov', '$2y$10$ZpeBzRq3QGLs1xK4vpeYQOtW4mRxIaqXmcQ5j8PcH5QxZb4TJhxtm', 'bobkovsergeyarkadevich@gmail.com', 0, 'https://i.imgur.com/kcLu8VU.jpg'),
+(25, 'Orally123456', '$2y$10$Nsvp031UAvVAs8fLCB46yOkcAHeGWrKbnk0DDfe5ksj.73gSJMEaK', 'info@sitesdevelopment.ru', 0, NULL);
 
 --
 -- Индексы сохранённых таблиц
@@ -404,7 +405,7 @@ ALTER TABLE `followers`
 -- AUTO_INCREMENT для таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
@@ -416,31 +417,31 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT для таблицы `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT для таблицы `password_tokens`
 --
 ALTER TABLE `password_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT для таблицы `post_likes`
 --
 ALTER TABLE `post_likes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -451,12 +452,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `login_tokens`
   ADD CONSTRAINT `login_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Ограничения внешнего ключа таблицы `password_tokens`
---
-ALTER TABLE `password_tokens`
-  ADD CONSTRAINT `password_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `posts`

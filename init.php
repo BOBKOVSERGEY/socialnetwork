@@ -1,6 +1,8 @@
 <?php
 session_start();
 error_reporting(-1);
+// только php mailer
+//require_once __DIR__ . '/vendor/autoload.php';
 spl_autoload_register(function($className) {
   require __DIR__ . '/classes/' . $className . '.php';
 });
