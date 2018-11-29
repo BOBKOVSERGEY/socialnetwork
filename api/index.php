@@ -1,12 +1,96 @@
 <?php
 require_once __DIR__ . '/DB.php';
+require_once __DIR__ . '/../init.php';
 
 $db = new DB("localhost", "SocialNetwork", "root", "");
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
   if ($_GET['url'] == "auth") {
   } else if ($_GET['url'] == "users") {
+  } else if ($_GET['url'] == "posts") {
+
+    $token = $_COOKIE['SNID'];
+
+    $userid = $db->query('SELECT user_id FROM login_tokens WHERE token=:token', [':token' => sha1($token)])[0]['user_id'];
+
+
+
+
+    $followingposts = $db->query('SELECT posts.postimg,posts.posted_at,posts.id, posts.body, posts.likes, users.`username` FROM users, posts, followers
+WHERE posts.user_id = followers.user_id
+AND users.id = posts.user_id
+AND follower_id = :userid
+ORDER BY posts.likes DESC;', [':userid' => $userid]);
+
+    if (!empty($followingposts)) {
+      $response = '[';
+      foreach ($followingposts as $post) {
+
+        $response .= '{';
+        $response .= '"PostId": ' .$post['id'].',';
+        $response .= '"PostBody": "' .$post['body'].'",';
+        $response .= '"PostedBy": "' .$post['username'].'",';
+        $response .= '"PostDate": "' .$post['posted_at'].'",';
+        $response .= '"Likes": ' .$post['likes'].'';
+        $response .= '},';
+
+      }
+      $response = substr($response, 0, strlen($response) - 1);
+      $response .= ']';
+
+      http_response_code(200);
+      echo $response;
+    } else {
+      echo 'There no posts!';
+    }
   }
 } else if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+  if ($_GET['url'] == 'users') {
+    $postBody = file_get_contents("php://input");
+    $postBody = json_decode($postBody);
+    $username = $postBody->username;
+    $email = $postBody->email;
+    $password = $postBody->password;
+
+    if (!$db->query('SELECT username FROM users WHERE username=:username', [':username' => $username])) {
+      if (strlen($username) >= 3 && strlen($username) <= 32) {
+        if (!preg_match('/[^A-Za-z0-9]/', $username)) {
+          if (strlen($password) >= 6 && strlen($password) <= 60) {
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+              if (!$db->query('SELECT email FROM users WHERE email=:email', [':email' => $email])) {
+                $db->query('INSERT INTO users VALUES (null, :username, :password, :email, \'0\', null)', [':username' => $username, ':password' => password_hash($password, PASSWORD_BCRYPT), ':email' => $email]);
+
+                Mail::sendMail('Welcome to our Social Network!', 'Your account has been created!', $email);
+
+                echo '{ "Success": "User created!" }';
+                http_response_code(200);
+              } else {
+                echo '{ "Error": "Invalid username!" }';
+                http_response_code(409);
+              }
+            } else {
+              echo '{ "Error": "Email in use!" }';
+              http_response_code(409);
+            }
+          } else {
+            echo '{ "Error": "Invalid password!" }';
+            http_response_code(409);
+          }
+        } else {
+          echo '{ "Error": "Invalid username!" }';
+          http_response_code(409);
+        }
+      } else {
+        echo '{ "Error": "Invalid username!" }';
+        http_response_code(409);
+      }
+    } else {
+      echo '{ "Error": "User exists!" }';
+      http_response_code(409);
+    }
+
+  }
+
   if ($_GET['url'] == "auth") {
     $postBody = file_get_contents("php://input");
     $postBody = json_decode($postBody);
