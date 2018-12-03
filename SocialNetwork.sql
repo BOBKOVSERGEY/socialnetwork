@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 29 2018 г., 14:58
+-- Время создания: Дек 03 2018 г., 17:09
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -111,14 +111,8 @@ CREATE TABLE `login_tokens` (
 --
 
 INSERT INTO `login_tokens` (`id`, `token`, `user_id`) VALUES
-(17, '4e8177c61a7b6226e6f73463453e115f0f8d58fb', 8),
-(18, '17ef019acfb7ac386bf14e8fb1898152826d5179', 8),
-(19, '9c3f692bb6dcdb36f555ca61d69ba07e95de3752', 8),
-(20, '40a8380b5df87f20c506ac0971ef95bbc72ae1d5', 8),
-(21, '570a557a5cc750b1caa6dee1662e484b83199578', 8),
-(22, '5da4cc066fe9c14af6f7294cca848f5f3f52f28b', 8),
-(23, '7a07a81d01dfa1dc4560d777fb59a5982d69aad7', 8),
-(24, '34f98b9ade7d34b52409bf904b34f394c7b66d6d', 16);
+(24, '34f98b9ade7d34b52409bf904b34f394c7b66d6d', 16),
+(26, 'e2cc2aa59426acc647f0f15f8f9503bbbe507fc6', 16);
 
 -- --------------------------------------------------------
 
@@ -233,20 +227,20 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (19, 'eeeeeeeeeee', '2018-11-14 14:30:28', 16, 0, NULL, NULL),
 (20, 'd', '2018-11-14 14:30:35', 16, 1, NULL, NULL),
 (21, 'some new', '2018-11-14 14:32:20', 8, 0, NULL, NULL),
-(22, 'New post from Post.php', '2018-11-15 13:51:02', 8, 0, NULL, NULL),
+(22, 'New post from Post.php', '2018-11-15 13:51:02', 8, 1, NULL, NULL),
 (23, 'New post from Post.php', '2018-11-15 13:51:17', 8, 1, NULL, NULL),
 (24, 'fffffffffffff', '2018-11-15 13:53:54', 8, 2, NULL, NULL),
 (25, 'some', '2018-11-15 13:54:43', 8, 2, NULL, NULL),
-(26, 'some yet', '2018-11-15 14:12:36', 8, 3, NULL, NULL),
+(26, 'some yet', '2018-11-15 14:12:36', 8, 2, NULL, NULL),
 (27, 'already', '2018-11-15 14:17:57', 8, 0, NULL, NULL),
 (28, 'e', '2018-11-16 16:35:03', 8, 1, NULL, NULL),
 (29, 'eeeeeeeeeee', '2018-11-16 16:57:57', 12, 0, NULL, NULL),
 (30, 'Все привет', '2018-11-16 16:59:32', 12, 1, NULL, NULL),
 (31, 'some', '2018-11-20 15:39:16', 8, 1, NULL, NULL),
-(32, 'dddddddddddddddddddddd', '2018-11-20 15:59:06', 8, 1, NULL, NULL),
+(32, 'dddddddddddddddddddddd', '2018-11-20 15:59:06', 8, 0, NULL, NULL),
 (33, '', '2018-11-20 15:59:14', 8, 1, NULL, NULL),
-(34, 'some new', '2018-11-20 16:17:05', 8, 1, NULL, NULL),
-(37, 'some', '2018-11-20 16:36:47', 8, 3, 'https://i.imgur.com/9EOBIaF.png', NULL),
+(34, 'some new', '2018-11-20 16:17:05', 8, 0, NULL, NULL),
+(37, 'some', '2018-11-20 16:36:47', 8, 2, 'https://i.imgur.com/9EOBIaF.png', NULL),
 (38, 'dddddddd', '2018-11-21 14:46:11', 16, 1, NULL, NULL),
 (51, '@Vika kkkk', '2018-11-21 15:25:26', 16, 1, NULL, NULL),
 (60, '@Sergey Developer', '2018-11-22 12:59:54', 16, 0, NULL, ''),
@@ -262,7 +256,9 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (73, 'hello', '2018-11-28 12:16:29', 12, 0, NULL, ''),
 (74, '', '2018-11-28 12:16:49', 12, 0, NULL, ''),
 (75, '', '2018-11-28 12:17:09', 12, 1, 'https://i.imgur.com/QpdxMwL.png', ''),
-(76, 'Hello Sergey, I read O\'rally', '2018-11-29 14:45:07', 16, 0, NULL, '');
+(76, 'Hello Sergey, I read O\'rally', '2018-11-29 14:45:07', 16, 0, NULL, ''),
+(77, 'alert(\'hello\')', '2018-11-29 15:07:12', 16, 0, NULL, ''),
+(78, 'some \'\'\'\'\'', '2018-11-29 15:20:38', 16, 0, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -284,19 +280,16 @@ INSERT INTO `post_likes` (`id`, `post_id`, `user_id`) VALUES
 (113, 72, 16),
 (114, 70, 16),
 (115, 38, 16),
-(116, 34, 16),
 (117, 33, 16),
-(118, 37, 16),
 (119, 71, 16),
-(120, 32, 16),
 (121, 31, 16),
 (122, 28, 16),
-(123, 26, 16),
-(124, 25, 16),
 (125, 67, 16),
 (126, 65, 16),
 (127, 30, 12),
-(128, 75, 12);
+(128, 75, 12),
+(131, 22, 16),
+(145, 25, 16);
 
 -- --------------------------------------------------------
 
@@ -416,7 +409,7 @@ ALTER TABLE `followers`
 -- AUTO_INCREMENT для таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
@@ -440,13 +433,13 @@ ALTER TABLE `password_tokens`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT для таблицы `post_likes`
 --
 ALTER TABLE `post_likes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
 
 --
 -- AUTO_INCREMENT для таблицы `users`

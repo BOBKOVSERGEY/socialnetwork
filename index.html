@@ -141,9 +141,56 @@
 
             var posts = JSON.parse(r);
             $.each(posts, function (index) {
-              $('.timelineposts').html(
-                $('.timelineposts').html() + '<blockquote><p>'+posts[index].PostBody+'</p><footer>Posted by '+posts[index].PostedBy+' on '+posts[index].PostDate+'<button class="btn btn-default" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;"> <i class="glyphicon glyphicon-heart" data-aos="flip-right"></i><span> '+posts[index].Likes+' Likes</span></button><button class="btn btn-default comment" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;"><i class="glyphicon glyphicon-flash" style="color:#f9d616;"></i><span style="color:#f9d616;"> Comments</span></button></footer></blockquote>'
-              )
+              if (posts[index].PostImg != '') {
+                $('.timelineposts').html(
+                  $('.timelineposts').html() + '<blockquote><p>'+posts[index].PostBody+'</p><footer>Posted by '+posts[index].PostedBy+' on '+posts[index].PostDate+'<button class="btn btn-default" data-id="'+posts[index].PostId+'"  type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;"> <i class="glyphicon glyphicon-heart" data-aos="flip-right"></i><span> '+posts[index].Likes+' Likes</span></button><button class="btn btn-default comment" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;"><i class="glyphicon glyphicon-flash" style="color:#f9d616;"></i><span style="color:#f9d616;"> Comments</span></button></footer><div><img style="max-width: 100%" src="' + posts[index].PostImg+ '" alt=""></div></blockquote>'
+                )
+
+                $('[data-id]').on('click', function () {
+                  var buttonId = $(this).attr('data-id');
+                  $.ajax({
+                    type: "POST",
+                    url: "api/likes?id=" + $(this).attr('data-id'),
+                    processData: false,
+                    contentType: "application/json",
+                    data: '',
+                    success: function (r) {
+                      var res = JSON.parse(r)
+                      console.log(res);
+                      console.log(buttonId);
+                      $("[data-id='"+buttonId+"']").html(' <i class="glyphicon glyphicon-heart" data-aos="flip-right"></i><span> '+res.Likes+' Likes</span>')
+                    },
+                    error: function (r) {
+                      console.log(r);
+                    }
+                  })
+                })
+
+              } else {
+                $('.timelineposts').html(
+                  $('.timelineposts').html() + '<blockquote><p>'+posts[index].PostBody+'</p><footer>Posted by '+posts[index].PostedBy+' on '+posts[index].PostDate+'<button class="btn btn-default" data-id="'+posts[index].PostId+'" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;"> <i class="glyphicon glyphicon-heart" data-aos="flip-right"></i><span> '+posts[index].Likes+' Likes</span></button><button class="btn btn-default comment" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;"><i class="glyphicon glyphicon-flash" style="color:#f9d616;"></i><span style="color:#f9d616;"> Comments</span></button></footer></blockquote>'
+                )
+
+                $('[data-id]').on('click', function () {
+                  var buttonId = $(this).attr('data-id');
+                  $.ajax({
+                    type: "POST",
+                    url: "api/likes?id=" + $(this).attr('data-id'),
+                    processData: false,
+                    contentType: "application/json",
+                    data: '',
+                    success: function (r) {
+                      var res = JSON.parse(r);
+                      console.log(res);
+                      $("[data-id='"+buttonId+"']").html(' <i class="glyphicon glyphicon-heart" data-aos="flip-right"></i><span> '+res.Likes+' Likes</span>')
+                    },
+                    error: function (r) {
+                      console.log(r);
+                    }
+                  })
+                })
+              }
+
             });
            /* var posts = JSON.parse(r)
             $.each(posts, function(index) {

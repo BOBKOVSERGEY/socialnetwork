@@ -29,6 +29,7 @@ ORDER BY posts.likes DESC;', [':userid' => $userid]);
         $response .= '"PostId": ' .$post['id'].',';
         $response .= '"PostBody": "' .$post['body'].'",';
         $response .= '"PostedBy": "' .$post['username'].'",';
+        $response .= '"PostImg": "' .$post['postimg'].'",';
         $response .= '"PostDate": "' .$post['posted_at'].'",';
         $response .= '"Likes": ' .$post['likes'].'';
         $response .= '},';
@@ -111,6 +112,29 @@ ORDER BY posts.likes DESC;', [':userid' => $userid]);
       echo '{ "Error": "Invalid username or password!" }';
       http_response_code(401);
     }
+  } else if ($_GET['url'] == 'likes') {
+    $postId = $_GET['id'];
+    $token = $_COOKIE['SNID'];
+
+    $likerId = $db->query('SELECT user_id FROM login_tokens WHERE token=:token', [':token' => sha1($token)])[0]['user_id'];
+
+    if (!$db->query('SELECT user_id FROM post_likes WHERE post_id=:postid AND user_id=:userid', [':postid' => $postId, ':userid' => $likerId])) {
+      $db->query('UPDATE posts SET likes=likes+1 WHERE id=:postid', [':postid' => $postId]);
+      $db->query('INSERT INTO post_likes VALUES (null, :postid, :userid)', [':postid' => $postId, ':userid' => $likerId]);
+      //Notify::createNotify('', $postId);
+      //header("Location: profile.php?username=$username");
+    } else {
+      $db->query('UPDATE posts SET likes=likes-1 WHERE id=:postid', [':postid' => $postId]);
+      $db->query('DELETE FROM post_likes WHERE post_id=:postid AND user_id=:userid', [':postid' => $postId, ':userid' => $likerId]);
+      //header("Location: profile.php?username=$username");
+
+    }
+
+    echo "{";
+    echo '"Likes":';
+    echo $db->query('SELECT likes FROM posts WHERE id=:postid', [':postid' => $postId])[0]['likes'];
+    echo "}";
+
   }
 }  else if ($_SERVER['REQUEST_METHOD'] == "DELETE") {
   if ($_GET['url'] == "auth") {
