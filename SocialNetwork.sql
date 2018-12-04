@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 03 2018 г., 17:09
+-- Время создания: Дек 04 2018 г., 16:58
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -46,8 +46,6 @@ INSERT INTO `comments` (`id`, `comment`, `user_id`, `posted_at`, `post_id`) VALU
 (3, 'уще комменр', 8, '2018-11-16 16:17:47', 7),
 (4, 'у', 8, '2018-11-16 16:19:17', 9),
 (5, 'new', 8, '2018-11-16 16:27:01', 6),
-(6, 'alert(\'hello\')', 8, '2018-11-16 16:27:38', 6),
-(7, 'alert(\'hello\')', 8, '2018-11-16 16:27:54', 6),
 (8, 'sss', 8, '2018-11-16 16:30:33', 9),
 (9, 'some new comments', 8, '2018-11-16 16:33:25', 9),
 (10, 'Some new comments', 8, '2018-11-16 16:33:50', 10),
@@ -65,7 +63,9 @@ INSERT INTO `comments` (`id`, `comment`, `user_id`, `posted_at`, `post_id`) VALU
 (22, 'some', 16, '2018-11-22 13:04:49', 25),
 (23, 'some', 16, '2018-11-22 13:05:36', 24),
 (24, 'hey', 8, '2018-11-27 12:19:22', 38),
-(25, 'it\'s cool', 8, '2018-11-29 13:26:29', 72);
+(25, 'it\'s cool', 8, '2018-11-29 13:26:29', 72),
+(26, 'by', 16, '2018-12-04 16:52:39', 37),
+(27, 'hello, how are you\'had?', 16, '2018-12-04 16:54:22', 24);
 
 -- --------------------------------------------------------
 
@@ -181,7 +181,8 @@ INSERT INTO `notifications` (`id`, `type`, `receiver`, `sender`, `extra`) VALUES
 (9, 1, 16, 16, '{ \"postbody\" : \"@vika six\" }'),
 (10, 2, 16, 16, ''),
 (11, 2, 12, 12, ''),
-(12, 2, 12, 12, '');
+(12, 2, 12, 12, ''),
+(13, 2, 8, 16, '');
 
 -- --------------------------------------------------------
 
@@ -229,7 +230,7 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (21, 'some new', '2018-11-14 14:32:20', 8, 0, NULL, NULL),
 (22, 'New post from Post.php', '2018-11-15 13:51:02', 8, 1, NULL, NULL),
 (23, 'New post from Post.php', '2018-11-15 13:51:17', 8, 1, NULL, NULL),
-(24, 'fffffffffffff', '2018-11-15 13:53:54', 8, 2, NULL, NULL),
+(24, 'fffffffffffff', '2018-11-15 13:53:54', 8, 3, NULL, NULL),
 (25, 'some', '2018-11-15 13:54:43', 8, 2, NULL, NULL),
 (26, 'some yet', '2018-11-15 14:12:36', 8, 2, NULL, NULL),
 (27, 'already', '2018-11-15 14:17:57', 8, 0, NULL, NULL),
@@ -240,7 +241,7 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (32, 'dddddddddddddddddddddd', '2018-11-20 15:59:06', 8, 0, NULL, NULL),
 (33, '', '2018-11-20 15:59:14', 8, 1, NULL, NULL),
 (34, 'some new', '2018-11-20 16:17:05', 8, 0, NULL, NULL),
-(37, 'some', '2018-11-20 16:36:47', 8, 2, 'https://i.imgur.com/9EOBIaF.png', NULL),
+(37, 'some', '2018-11-20 16:36:47', 8, 3, 'https://i.imgur.com/9EOBIaF.png', NULL),
 (38, 'dddddddd', '2018-11-21 14:46:11', 16, 1, NULL, NULL),
 (51, '@Vika kkkk', '2018-11-21 15:25:26', 16, 1, NULL, NULL),
 (60, '@Sergey Developer', '2018-11-22 12:59:54', 16, 0, NULL, ''),
@@ -289,7 +290,9 @@ INSERT INTO `post_likes` (`id`, `post_id`, `user_id`) VALUES
 (127, 30, 12),
 (128, 75, 12),
 (131, 22, 16),
-(145, 25, 16);
+(145, 25, 16),
+(146, 37, 16),
+(147, 24, 16);
 
 -- --------------------------------------------------------
 
@@ -397,7 +400,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT для таблицы `followers`
@@ -421,7 +424,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT для таблицы `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `password_tokens`
@@ -439,7 +442,7 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT для таблицы `post_likes`
 --
 ALTER TABLE `post_likes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
 
 --
 -- AUTO_INCREMENT для таблицы `users`

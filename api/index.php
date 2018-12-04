@@ -6,7 +6,26 @@ $db = new DB("localhost", "SocialNetwork", "root", "");
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
   if ($_GET['url'] == "auth") {
   } else if ($_GET['url'] == "users") {
-  } else if ($_GET['url'] == "posts") {
+  } else if ($_GET['url'] == "comments" && isset($_GET['postid'])) {
+
+    if ($db->query('SELECT comments.comment, comments.posted_at, users.username FROM comments, users WHERE post_id=:postid AND comments.user_id = users.id', [':postid' => $_GET['postid']])) {
+      $output = '';
+      $comments = $db->query('SELECT comments.comment, comments.posted_at, users.username FROM comments, users WHERE post_id=:postid AND comments.user_id = users.id', [':postid' => $_GET['postid']]);
+      $output .= "[";
+      foreach($comments as $comment) {
+        $output .= "{";
+        $output .= '"Comment": "'.$comment['comment'].'",';
+        $output .= '"CommentedBy": "'.$comment['username'].'"';
+        $output .= "},";
+        //echo $comment['comment']." ~ ".$comment['username']."<hr />";
+      }
+      $output = substr($output, 0, strlen($output)-1);
+      $output .= "]";
+      echo $output;
+    }
+
+  }
+  else if ($_GET['url'] == "posts") {
 
     $token = $_COOKIE['SNID'];
 
