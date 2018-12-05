@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 04 2018 г., 16:58
+-- Время создания: Дек 05 2018 г., 15:27
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -182,7 +182,8 @@ INSERT INTO `notifications` (`id`, `type`, `receiver`, `sender`, `extra`) VALUES
 (10, 2, 16, 16, ''),
 (11, 2, 12, 12, ''),
 (12, 2, 12, 12, ''),
-(13, 2, 8, 16, '');
+(13, 2, 8, 16, ''),
+(14, 1, 8, 16, '{ \"postbody\" : \"@Sergey Hello\" }');
 
 -- --------------------------------------------------------
 
@@ -243,23 +244,16 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (34, 'some new', '2018-11-20 16:17:05', 8, 0, NULL, NULL),
 (37, 'some', '2018-11-20 16:36:47', 8, 3, 'https://i.imgur.com/9EOBIaF.png', NULL),
 (38, 'dddddddd', '2018-11-21 14:46:11', 16, 1, NULL, NULL),
-(51, '@Vika kkkk', '2018-11-21 15:25:26', 16, 1, NULL, NULL),
-(60, '@Sergey Developer', '2018-11-22 12:59:54', 16, 0, NULL, ''),
-(61, '#PHP Developers', '2018-11-22 13:00:26', 16, 0, NULL, 'PHP,'),
-(62, '@Sergey Hello', '2018-11-22 13:53:52', 16, 0, NULL, ''),
-(63, '@Vasy  hello', '2018-11-22 13:58:59', 16, 0, NULL, ''),
-(64, '@Vika some', '2018-11-22 14:00:08', 16, 0, NULL, ''),
-(65, '@vika any', '2018-11-23 14:41:41', 16, 1, NULL, ''),
-(67, '@vika Hello World', '2018-11-23 14:54:17', 16, 1, NULL, ''),
 (69, '', '2018-11-23 14:57:18', 16, 1, 'https://i.imgur.com/b0Yeied.jpg', ''),
-(70, '@vika json some', '2018-11-23 15:15:04', 16, 2, NULL, ''),
-(72, '@vika six', '2018-11-23 15:33:10', 16, 2, 'https://i.imgur.com/s2crzOv.jpg', ''),
 (73, 'hello', '2018-11-28 12:16:29', 12, 0, NULL, ''),
 (74, '', '2018-11-28 12:16:49', 12, 0, NULL, ''),
 (75, '', '2018-11-28 12:17:09', 12, 1, 'https://i.imgur.com/QpdxMwL.png', ''),
-(76, 'Hello Sergey, I read O\'rally', '2018-11-29 14:45:07', 16, 0, NULL, ''),
-(77, 'alert(\'hello\')', '2018-11-29 15:07:12', 16, 0, NULL, ''),
-(78, 'some \'\'\'\'\'', '2018-11-29 15:20:38', 16, 0, NULL, '');
+(79, 'new some', '2018-12-05 14:31:57', 16, 0, NULL, ''),
+(80, 'Hey guy', '2018-12-05 15:06:01', 16, 0, NULL, ''),
+(82, '@Sergey Hello', '2018-12-05 15:09:38', 16, 0, NULL, ''),
+(85, 'Hey guy', '2018-12-05 15:15:05', 16, 0, NULL, ''),
+(86, '#PHP', '2018-12-05 15:15:52', 16, 1, NULL, 'PHP,'),
+(87, '#PHP', '2018-12-05 15:18:03', 16, 1, NULL, 'PHP,');
 
 -- --------------------------------------------------------
 
@@ -292,7 +286,9 @@ INSERT INTO `post_likes` (`id`, `post_id`, `user_id`) VALUES
 (131, 22, 16),
 (145, 25, 16),
 (146, 37, 16),
-(147, 24, 16);
+(147, 24, 16),
+(148, 86, 16),
+(150, 87, 16);
 
 -- --------------------------------------------------------
 
@@ -319,8 +315,8 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `verified`, `profile
 (12, 'Vasy', '$2y$10$82IkeD322F1Xqs8L2vFfU.TiEySkgAWiXb3zsm4IEfSo0GOtWglfq', 'pochta@pktitan.ru', 0, NULL),
 (13, 'Vasy1', '$2y$10$tuTAsY15oKrhzxpQkLci5ujXNnGXVTXse1ZxkspxXiOZ4g7pqjHO.', 'pochta1@pktitan.ru', 0, NULL),
 (14, 'Verified', '$2y$10$ShpIEeTLaipYTA6N4uoXhupgmE.FZqeIXtjinZy6VzcgG4GBTBD6.', 'verified@gmail.com', 0, NULL),
-(15, 'alert(\'hello)', '$2y$10$Z7bgQ5XEEup7wNh9T5LnJO5N.Rm9S4HYy/kqNBGX7CguZwPfL/Vke', 'vzlk@yandex.ru', 0, NULL),
-(16, 'Vika', '$2y$10$fVKElmVNUMZsfiPobHr4UuUZYge5Jf.FPSm18C39bu.NzCvFxGslK', 'pktitanseo@yandex.ru', 0, NULL),
+(15, 'alert(\'hello)', '$2y$10$Z7bgQ5XEEup7wNh9T5LnJO5N.Rm9S4HYy/kqNBGX7CguZwPfL/Vke', 'vzlk@yandex.ru', 1, NULL),
+(16, 'Vika', '$2y$10$fVKElmVNUMZsfiPobHr4UuUZYge5Jf.FPSm18C39bu.NzCvFxGslK', 'pktitanseo@yandex.ru', 1, NULL),
 (17, 'SergeyBobkov', '$2y$10$ZpeBzRq3QGLs1xK4vpeYQOtW4mRxIaqXmcQ5j8PcH5QxZb4TJhxtm', 'bobkovsergeyarkadevich@gmail.com', 0, 'https://i.imgur.com/kcLu8VU.jpg'),
 (25, 'Orally123456', '$2y$10$Nsvp031UAvVAs8fLCB46yOkcAHeGWrKbnk0DDfe5ksj.73gSJMEaK', 'info@sitesdevelopment.ru', 0, NULL),
 (26, 'Sergey1', '$2y$10$3IpMre.tWx34aWfh9pABjex9B9f/XuaMvOTN6rqs/MvROWXOV/pW.', 'sergey1_bobkov@inbox.ru', 0, NULL);
@@ -424,7 +420,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT для таблицы `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT для таблицы `password_tokens`
@@ -436,13 +432,13 @@ ALTER TABLE `password_tokens`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT для таблицы `post_likes`
 --
 ALTER TABLE `post_likes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
 
 --
 -- AUTO_INCREMENT для таблицы `users`

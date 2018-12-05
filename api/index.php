@@ -24,21 +24,45 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       echo $output;
     }
 
-  }
-  else if ($_GET['url'] == "posts") {
-
+  } else if ($_GET['url'] == "posts") {
     $token = $_COOKIE['SNID'];
-
     $userid = $db->query('SELECT user_id FROM login_tokens WHERE token=:token', [':token' => sha1($token)])[0]['user_id'];
 
-
-
-
     $followingposts = $db->query('SELECT posts.postimg,posts.posted_at,posts.id, posts.body, posts.likes, users.`username` FROM users, posts, followers
-WHERE posts.user_id = followers.user_id
-AND users.id = posts.user_id
-AND follower_id = :userid
-ORDER BY posts.likes DESC;', [':userid' => $userid]);
+                                  WHERE posts.user_id = followers.user_id
+                                  AND users.id = posts.user_id
+                                  AND follower_id = :userid
+                                  ORDER BY posts.likes DESC;', [':userid' => $userid]);
+
+    if (!empty($followingposts)) {
+      $response = '[';
+      foreach ($followingposts as $post) {
+
+        $response .= '{';
+        $response .= '"PostId": ' .$post['id'].',';
+        $response .= '"PostBody": "' .$post['body'].'",';
+        $response .= '"PostedBy": "' .$post['username'].'",';
+        $response .= '"PostImg": "' .$post['postimg'].'",';
+        $response .= '"PostDate": "' .$post['posted_at'].'",';
+        $response .= '"Likes": ' .$post['likes'].'';
+        $response .= '},';
+
+      }
+      $response = substr($response, 0, strlen($response) - 1);
+      $response .= ']';
+
+      http_response_code(200);
+      echo $response;
+    } else {
+      echo 'There no posts!';
+    }
+  } else if ($_GET['url'] == "profileposts") {
+    $userid = $db->query('SELECT id FROM users WHERE username=:username', [':username' => $_GET['username']])[0]['id'];
+
+    $followingposts = $db->query('SELECT posts.postimg,posts.posted_at,posts.id, posts.body, posts.likes, users.`username` FROM users, posts
+    WHERE users.id = posts.user_id
+    AND users.id = :userid
+    ORDER BY posts.id DESC;', [':userid' => $userid]);
 
     if (!empty($followingposts)) {
       $response = '[';
