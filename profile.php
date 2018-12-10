@@ -119,7 +119,9 @@ if (isset($_GET['username'])) {
     <form>
       <h1 class="text-left">Social Network</h1>
       <div class="searchbox"><i class="glyphicon glyphicon-search"></i>
-        <input class="form-control" type="text">
+        <input class="form-control sbox" type="text">
+        <ul class="list-group autocomplete" style="position:absolute;width:100%; z-index:100">
+        </ul>
       </div>
       <div class="dropdown">
         <button class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">MENU <span class="caret"></span></button>
@@ -146,7 +148,10 @@ if (isset($_GET['username'])) {
       <div class="collapse navbar-collapse" id="navcol-1">
         <form class="navbar-form navbar-left">
           <div class="searchbox"><i class="glyphicon glyphicon-search"></i>
-            <input class="form-control" type="text">
+            <input class="form-control sbox" type="text">
+            <ul class="list-group autocomplete" style="position:absolute;width:100%; z-index:100">
+              <li class="list-group-item"><span>Some</span></li>
+            </ul>
           </div>
         </form>
         <ul class="nav navbar-nav hidden-md hidden-lg navbar-right">
@@ -237,6 +242,7 @@ if (isset($_GET['username'])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
 <script type="text/javascript">
   $(function () {
+
     $.ajax({
 
       type: "GET",

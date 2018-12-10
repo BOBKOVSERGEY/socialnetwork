@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 05 2018 г., 15:27
+-- Время создания: Дек 10 2018 г., 11:49
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -112,7 +112,7 @@ CREATE TABLE `login_tokens` (
 
 INSERT INTO `login_tokens` (`id`, `token`, `user_id`) VALUES
 (24, '34f98b9ade7d34b52409bf904b34f394c7b66d6d', 16),
-(26, 'e2cc2aa59426acc647f0f15f8f9503bbbe507fc6', 16);
+(27, '9e3e843dc27d4ca3aa9728d85944a1ebc9c97028', 16);
 
 -- --------------------------------------------------------
 
@@ -285,10 +285,10 @@ INSERT INTO `post_likes` (`id`, `post_id`, `user_id`) VALUES
 (128, 75, 12),
 (131, 22, 16),
 (145, 25, 16),
-(146, 37, 16),
 (147, 24, 16),
 (148, 86, 16),
-(150, 87, 16);
+(150, 87, 16),
+(151, 37, 16);
 
 -- --------------------------------------------------------
 
@@ -408,7 +408,7 @@ ALTER TABLE `followers`
 -- AUTO_INCREMENT для таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
@@ -438,7 +438,7 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT для таблицы `post_likes`
 --
 ALTER TABLE `post_likes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
