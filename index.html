@@ -110,7 +110,7 @@
             </div>
         </div>
     </div>
-    <div class="footer-dark navbar-fixed-bottom">
+    <div class="footer-dark navbar-fixed-bottom" style="position: relative;">
         <footer>
             <div class="container">
                 <p class="copyright">Social Network© 2016</p>
@@ -126,6 +126,7 @@
         // Search
         $('.sbox').on('keyup', function () {
           $('.autocomplete').html('');
+
           $.ajax({
             type: "GET",
             url: "api/search?query=" + $(this).val(),
@@ -148,7 +149,7 @@
               for (var i = 0; i < posts.length; i++) {
                 $('.autocomplete').html(
                   $('.autocomplete').html() +
-                  '<li class="list-group-item"><span>'+posts[i].body+'</span></li>'
+                  '<a href="profile.php?username='+posts[i].username+'#'+ posts[i].id +'"><li class="list-group-item"><span>'+posts[i].body+'</span></li></a>'
                 );
               }
             },

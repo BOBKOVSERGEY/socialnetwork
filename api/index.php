@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         $paramsArray[":p$i"] = $tosearch[$i];
       }
     }
-    $posts = $db->query('SELECT posts.body, users.username, posts.posted_at FROM posts, users WHERE users.id = posts.user_id AND posts.body LIKE :body ' . $whereclause . ' LIMIT 10', $paramsArray);
+    $posts = $db->query('SELECT posts.id, posts.body, users.username, posts.posted_at FROM posts, users WHERE users.id = posts.user_id AND posts.body LIKE :body ' . $whereclause . ' LIMIT 10', $paramsArray);
     echo json_encode($posts);
 
   } else if ($_GET['url'] == "users") {
@@ -46,7 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $userid = $db->query('SELECT user_id FROM login_tokens WHERE token=:token', [':token' => sha1($token)])[0]['user_id'];
 
     $followingposts = $db->query('SELECT posts.postimg,posts.posted_at,posts.id, posts.body, posts.likes, users.`username` FROM users, posts, followers
-                                  WHERE posts.user_id = followers.user_id
+                                  WHERE (posts.user_id = followers.user_id
+                                  OR posts.user_id = :userid)
                                   AND users.id = posts.user_id
                                   AND follower_id = :userid
                                   ORDER BY posts.likes DESC;', [':userid' => $userid]);

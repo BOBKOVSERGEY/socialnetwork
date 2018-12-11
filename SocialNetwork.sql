@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 10 2018 г., 11:49
+-- Время создания: Дек 11 2018 г., 13:47
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -65,7 +65,8 @@ INSERT INTO `comments` (`id`, `comment`, `user_id`, `posted_at`, `post_id`) VALU
 (24, 'hey', 8, '2018-11-27 12:19:22', 38),
 (25, 'it\'s cool', 8, '2018-11-29 13:26:29', 72),
 (26, 'by', 16, '2018-12-04 16:52:39', 37),
-(27, 'hello, how are you\'had?', 16, '2018-12-04 16:54:22', 24);
+(27, 'hello, how are you\'had?', 16, '2018-12-04 16:54:22', 24),
+(28, 'some comments', 16, '2018-12-11 13:45:17', 90);
 
 -- --------------------------------------------------------
 
@@ -222,16 +223,16 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (10, 'e', '2018-11-13 16:02:53', 12, 1, NULL, NULL),
 (13, 'new', '2018-11-14 13:21:35', 16, 1, NULL, NULL),
 (14, 'rrrrrrrrrrrrr', '2018-11-14 13:29:27', 16, 1, NULL, NULL),
-(15, 'rrrrrrrrrrrrr', '2018-11-14 13:42:29', 16, 0, NULL, NULL),
+(15, 'rrrrrrrrrrrrr', '2018-11-14 13:42:29', 16, 1, NULL, NULL),
 (16, 'rrrrrrrrrrrrr', '2018-11-14 13:42:32', 16, 1, NULL, NULL),
 (17, 'eeeeeeeeeeee', '2018-11-14 14:29:13', 16, 0, NULL, NULL),
 (18, 'eeeeeeeeeeee', '2018-11-14 14:29:23', 16, 0, NULL, NULL),
 (19, 'eeeeeeeeeee', '2018-11-14 14:30:28', 16, 0, NULL, NULL),
 (20, 'd', '2018-11-14 14:30:35', 16, 1, NULL, NULL),
-(21, 'some new', '2018-11-14 14:32:20', 8, 0, NULL, NULL),
+(21, 'some new', '2018-11-14 14:32:20', 8, 1, NULL, NULL),
 (22, 'New post from Post.php', '2018-11-15 13:51:02', 8, 1, NULL, NULL),
 (23, 'New post from Post.php', '2018-11-15 13:51:17', 8, 1, NULL, NULL),
-(24, 'fffffffffffff', '2018-11-15 13:53:54', 8, 3, NULL, NULL),
+(24, 'fffffffffffff', '2018-11-15 13:53:54', 8, 2, NULL, NULL),
 (25, 'some', '2018-11-15 13:54:43', 8, 2, NULL, NULL),
 (26, 'some yet', '2018-11-15 14:12:36', 8, 2, NULL, NULL),
 (27, 'already', '2018-11-15 14:17:57', 8, 0, NULL, NULL),
@@ -239,7 +240,7 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (29, 'eeeeeeeeeee', '2018-11-16 16:57:57', 12, 0, NULL, NULL),
 (30, 'Все привет', '2018-11-16 16:59:32', 12, 1, NULL, NULL),
 (31, 'some', '2018-11-20 15:39:16', 8, 1, NULL, NULL),
-(32, 'dddddddddddddddddddddd', '2018-11-20 15:59:06', 8, 0, NULL, NULL),
+(32, 'dddddddddddddddddddddd', '2018-11-20 15:59:06', 8, 1, NULL, NULL),
 (33, '', '2018-11-20 15:59:14', 8, 1, NULL, NULL),
 (34, 'some new', '2018-11-20 16:17:05', 8, 0, NULL, NULL),
 (37, 'some', '2018-11-20 16:36:47', 8, 3, 'https://i.imgur.com/9EOBIaF.png', NULL),
@@ -253,7 +254,10 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (82, '@Sergey Hello', '2018-12-05 15:09:38', 16, 0, NULL, ''),
 (85, 'Hey guy', '2018-12-05 15:15:05', 16, 0, NULL, ''),
 (86, '#PHP', '2018-12-05 15:15:52', 16, 1, NULL, 'PHP,'),
-(87, '#PHP', '2018-12-05 15:18:03', 16, 1, NULL, 'PHP,');
+(87, '#PHP', '2018-12-05 15:18:03', 16, 1, NULL, 'PHP,'),
+(88, '123456New posts', '2018-12-11 13:18:54', 16, 0, NULL, ''),
+(89, '', '2018-12-11 13:20:02', 16, 1, 'https://i.imgur.com/wjw1LT5.jpg', ''),
+(90, '', '2018-12-11 13:20:23', 16, 1, 'https://i.imgur.com/Qh32soY.jpg', '');
 
 -- --------------------------------------------------------
 
@@ -283,12 +287,16 @@ INSERT INTO `post_likes` (`id`, `post_id`, `user_id`) VALUES
 (126, 65, 16),
 (127, 30, 12),
 (128, 75, 12),
-(131, 22, 16),
 (145, 25, 16),
-(147, 24, 16),
 (148, 86, 16),
 (150, 87, 16),
-(151, 37, 16);
+(151, 37, 16),
+(152, 21, 16),
+(153, 22, 16),
+(154, 32, 16),
+(156, 89, 16),
+(157, 90, 16),
+(158, 15, 16);
 
 -- --------------------------------------------------------
 
@@ -396,7 +404,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT для таблицы `followers`
@@ -432,13 +440,13 @@ ALTER TABLE `password_tokens`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT для таблицы `post_likes`
 --
 ALTER TABLE `post_likes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
