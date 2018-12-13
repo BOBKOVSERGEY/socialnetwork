@@ -45,12 +45,14 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $token = $_COOKIE['SNID'];
     $userid = $db->query('SELECT user_id FROM login_tokens WHERE token=:token', [':token' => sha1($token)])[0]['user_id'];
 
-    $followingposts = $db->query('SELECT posts.postimg,posts.posted_at,posts.id, posts.body, posts.likes, users.`username` FROM users, posts, followers
+    $followingposts = $db->query('SELECT posts.postimg, posts.posted_at, posts.id, posts.body, posts.likes, users.`username` FROM users, posts, followers
                                   WHERE (posts.user_id = followers.user_id
                                   OR posts.user_id = :userid)
                                   AND users.id = posts.user_id
-                                  AND follower_id = :userid
-                                  ORDER BY posts.likes DESC;', [':userid' => $userid]);
+                                  AND followers.follower_id = :userid
+                                  GROUP BY posts.id
+                                  ORDER BY posts.likes DESC', [':userid' => $userid]);
+    //debug($followingposts);
 
     if (!empty($followingposts)) {
       $response = '[';
