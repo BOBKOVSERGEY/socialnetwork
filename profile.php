@@ -269,10 +269,183 @@ if (isset($_GET['username'])) {
       $('html,body').animate({scrollTop: top},1500);
     }
 
+    var start = 5;
+    var working = false;
+    $(window).scroll(function () {
+      //$(this).scrollTop() + 1 >= $('body').height() - $(window).height()
+      if ($(window).scrollTop() + $('body').height() >= ($(document).height() - 100)) {
+
+        if (working == false) {
+          working = true;
+          $.ajax({
+
+            type: "GET",
+            url: "api/profileposts?username=<?php echo $username; ?>&start="+start,
+            processData: false,
+            contentType: "application/json",
+            data: '',
+            success: function(r) {
+              r = r.replace(/\\n/g, "\\n")
+                .replace(/\\'/g, "\\'")
+                .replace(/\\"/g, '\\"')
+                .replace(/\\&/g, "\\&")
+                .replace(/\\r/g, "\\r")
+                .replace(/\\t/g, "\\t")
+                .replace(/\\b/g, "\\b")
+                .replace(/\\f/g, "\\f");
+              r = r.replace(/[\u0000-\u0019]+/g,"");
+
+              var posts = JSON.parse(r);
+              $.each(posts, function (index) {
+                if (posts[index].PostImg != '') {
+                  $('.timelineposts').html(
+                    $('.timelineposts').html() + '<li class="list-group-item" id="' + posts[index].PostId + '"><blockquote><p>'+posts[index].PostBody+'</p><footer>Posted by '+posts[index].PostedBy+' on '+posts[index].PostDate+'<button class="btn btn-default" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;" data-id="'+posts[index].PostId+'"> <i class="glyphicon glyphicon-heart" data-aos="flip-right"></i><span> '+posts[index].Likes+' Likes</span></button><button class="btn btn-default comment" data-post-id="'+posts[index].PostId+'" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;"><i class="glyphicon glyphicon-flash" style="color:#f9d616;"></i><span style="color:#f9d616;"> Comments</span></button></footer><div><img style="max-width: 100%" data-tempsrc="'+posts[index].PostImg+'" src="" alt="" class="postimg" id="img'+posts[index].PostId+'"></div></blockquote></li>'
+                  )
+
+                  $('[data-post-id]').on('click', function () {
+                    var buttonId = $(this).attr('data-post-id');
+                    $.ajax({
+
+                      type: "GET",
+                      url: "api/comments?postid=" + $(this).attr('data-post-id'),
+                      processData: false,
+                      contentType: "application/json",
+                      data: '',
+                      success: function (r) {
+                        r = r.replace(/\\n/g, "\\n")
+                          .replace(/\\'/g, "\\'")
+                          .replace(/\\"/g, '\\"')
+                          .replace(/\\&/g, "\\&")
+                          .replace(/\\r/g, "\\r")
+                          .replace(/\\t/g, "\\t")
+                          .replace(/\\b/g, "\\b")
+                          .replace(/\\f/g, "\\f");
+                        r = r.replace(/[\u0000-\u0019]+/g,"");
+                        if (r != '') {
+                          var comments = JSON.parse(r);
+                          showCommentsModal(comments);
+                        }
+                      },
+                      error: function (r) {
+                        console.log(r);
+                      }
+                    });
+
+                  });
+
+                  $('[data-id]').on('click', function () {
+                    var buttonId = $(this).attr('data-id');
+                    $.ajax({
+                      type: "POST",
+                      url: "api/likes?id=" + $(this).attr('data-id'),
+                      processData: false,
+                      contentType: "application/json",
+                      data: '',
+                      success: function (r) {
+                        var res = JSON.parse(r)
+                        console.log(res);
+                        console.log(buttonId);
+                        $("[data-id='"+buttonId+"']").html(' <i class="glyphicon glyphicon-heart" data-aos="flip-right"></i><span> '+res.Likes+' Likes</span>')
+                      },
+                      error: function (r) {
+                        console.log(r);
+                      }
+                    })
+                  })
+
+                } else {
+                  $('.timelineposts').html(
+                    $('.timelineposts').html() + '<li class="list-group-item" id="' + posts[index].PostId + '"><blockquote><p>'+posts[index].PostBody+'</p><footer>Posted by '+posts[index].PostedBy+' on '+posts[index].PostDate+'<button class="btn btn-default" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;" data-id="'+posts[index].PostId+'"> <i class="glyphicon glyphicon-heart" data-aos="flip-right"></i><span> '+posts[index].Likes+' Likes</span></button><button class="btn btn-default comment" data-post-id="'+posts[index].PostId+'" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;"><i class="glyphicon glyphicon-flash" style="color:#f9d616;"></i><span style="color:#f9d616;"> Comments</span></button></footer></blockquote></li>'
+                  )
+
+                  $('[data-post-id]').on('click', function () {
+                    var buttonId = $(this).attr('data-post-id');
+                    $.ajax({
+
+                      type: "GET",
+                      url: "api/comments?postid=" + $(this).attr('data-post-id'),
+                      processData: false,
+                      contentType: "application/json",
+                      data: '',
+                      success: function (r) {
+                        r = r.replace(/\\n/g, "\\n")
+                          .replace(/\\'/g, "\\'")
+                          .replace(/\\"/g, '\\"')
+                          .replace(/\\&/g, "\\&")
+                          .replace(/\\r/g, "\\r")
+                          .replace(/\\t/g, "\\t")
+                          .replace(/\\b/g, "\\b")
+                          .replace(/\\f/g, "\\f");
+                        r = r.replace(/[\u0000-\u0019]+/g,"");
+                        if (r != '') {
+                          var comments = JSON.parse(r);
+                          showCommentsModal(comments);
+                        }
+                      },
+                      error: function (r) {
+                        console.log(r);
+                      }
+                    });
+                  });
+
+                  $('[data-id]').on('click', function () {
+                    var buttonId = $(this).attr('data-id');
+                    $.ajax({
+                      type: "POST",
+                      url: "api/likes?id=" + $(this).attr('data-id'),
+                      processData: false,
+                      contentType: "application/json",
+                      data: '',
+                      success: function (r) {
+                        var res = JSON.parse(r);
+                        $("[data-id='"+buttonId+"']").html(' <i class="glyphicon glyphicon-heart" data-aos="flip-right"></i><span> '+res.Likes+' Likes</span>')
+                      },
+                      error: function (r) {
+
+                      }
+                    })
+                  })
+                }
+
+              });
+              /* var posts = JSON.parse(r)
+               $.each(posts, function(index) {
+                 $('.timelineposts').html(
+                   $('.timelineposts').html() + '<blockquote><p>'+posts[index].PostBody+'</p><footer>Posted by '+posts[index].PostedBy+' on '+posts[index].PostDate+'<button class="btn btn-default" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;"> <i class="glyphicon glyphicon-heart" data-aos="flip-right"></i><span> '+posts[index].Likes+' Likes</span></button><button class="btn btn-default comment" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;"><i class="glyphicon glyphicon-flash" style="color:#f9d616;"></i><span style="color:#f9d616;"> Comments</span></button></footer></blockquote>'
+                 )
+               })*/
+
+              $('.postimg').each(function() {
+                this.src=$(this).attr('data-tempsrc')
+                this.onload = function() {
+                  this.style.opacity = '1';
+                }
+              })
+
+              if (location.hash) {
+                scrollToAnchor(location.hash)
+              }
+
+              start+=5;
+              setTimeout(function() {
+                working = false;
+              }, 4000)
+
+            },
+            error: function(r) {
+              console.log(r)
+            }
+
+          });
+        }
+      }
+    });
+
+
     $.ajax({
 
       type: "GET",
-      url: "api/profileposts?username=<?php echo $username; ?>",
+      url: "api/profileposts?username=<?php echo $username; ?>&start=0",
       processData: false,
       contentType: "application/json",
       data: '',
@@ -291,7 +464,7 @@ if (isset($_GET['username'])) {
         $.each(posts, function (index) {
           if (posts[index].PostImg != '') {
             $('.timelineposts').html(
-              $('.timelineposts').html() + '<li class="list-group-item" id="' + posts[index].PostId + '"><blockquote><p>'+posts[index].PostBody+'</p><footer>Posted by '+posts[index].PostedBy+' on '+posts[index].PostDate+'<button class="btn btn-default" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;" data-id="'+posts[index].PostId+'"> <i class="glyphicon glyphicon-heart" data-aos="flip-right"></i><span> '+posts[index].Likes+' Likes</span></button><button class="btn btn-default comment" data-post-id="'+posts[index].PostId+'" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;"><i class="glyphicon glyphicon-flash" style="color:#f9d616;"></i><span style="color:#f9d616;"> Comments</span></button></footer><div><img style="max-width: 100%" src="' + posts[index].PostImg+'" alt=""></div></blockquote></li>'
+              $('.timelineposts').html() + '<li class="list-group-item" id="' + posts[index].PostId + '"><blockquote><p>'+posts[index].PostBody+'</p><footer>Posted by '+posts[index].PostedBy+' on '+posts[index].PostDate+'<button class="btn btn-default" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;" data-id="'+posts[index].PostId+'"> <i class="glyphicon glyphicon-heart" data-aos="flip-right"></i><span> '+posts[index].Likes+' Likes</span></button><button class="btn btn-default comment" data-post-id="'+posts[index].PostId+'" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;"><i class="glyphicon glyphicon-flash" style="color:#f9d616;"></i><span style="color:#f9d616;"> Comments</span></button></footer><div><img style="max-width: 100%" data-tempsrc="'+posts[index].PostImg+'" src="" alt="" class="postimg" id="img'+posts[index].PostId+'"></div></blockquote></li>'
             )
 
             $('[data-post-id]').on('click', function () {
@@ -406,9 +579,18 @@ if (isset($_GET['username'])) {
              $('.timelineposts').html() + '<blockquote><p>'+posts[index].PostBody+'</p><footer>Posted by '+posts[index].PostedBy+' on '+posts[index].PostDate+'<button class="btn btn-default" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;"> <i class="glyphicon glyphicon-heart" data-aos="flip-right"></i><span> '+posts[index].Likes+' Likes</span></button><button class="btn btn-default comment" type="button" style="color:#eb3b60;background-image:url(&quot;none&quot;);background-color:transparent;"><i class="glyphicon glyphicon-flash" style="color:#f9d616;"></i><span style="color:#f9d616;"> Comments</span></button></footer></blockquote>'
            )
          })*/
+
+        $('.postimg').each(function() {
+          this.src=$(this).attr('data-tempsrc')
+          this.onload = function() {
+            this.style.opacity = '1';
+          }
+        })
+
         if (location.hash) {
           scrollToAnchor(location.hash)
         }
+
 
       },
       error: function(r) {

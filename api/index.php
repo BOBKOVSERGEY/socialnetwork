@@ -77,12 +77,15 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       echo 'There no posts!';
     }
   } else if ($_GET['url'] == "profileposts") {
+
+    $start = (int)$_GET['start'];
+
     $userid = $db->query('SELECT id FROM users WHERE username=:username', [':username' => $_GET['username']])[0]['id'];
 
     $followingposts = $db->query('SELECT posts.postimg,posts.posted_at,posts.id, posts.body, posts.likes, users.`username` FROM users, posts
     WHERE users.id = posts.user_id
     AND users.id = :userid
-    ORDER BY posts.id DESC;', [':userid' => $userid]);
+    ORDER BY posts.id DESC LIMIT 5 OFFSET '. $start .';', [':userid' => $userid]);
 
     if (!empty($followingposts)) {
       $response = '[';
