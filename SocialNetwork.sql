@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 17 2018 г., 17:11
+-- Время создания: Дек 18 2018 г., 15:16
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -112,7 +112,7 @@ CREATE TABLE `login_tokens` (
 --
 
 INSERT INTO `login_tokens` (`id`, `token`, `user_id`) VALUES
-(30, '2c35150e30e64b46bffff771c2451eed374b4606', 16);
+(35, 'c7f78f90afaafd2d6c9877c18182c7db860cbf68', 8);
 
 -- --------------------------------------------------------
 
@@ -151,7 +151,13 @@ INSERT INTO `messages` (`id`, `body`, `sender`, `receiver`, `watched`) VALUES
 (20, 'it\'s ok, how are you?', 10, 12, 0),
 (21, 'am fine, let\'s go walk', 12, 10, 0),
 (22, 'hello Vika, how are you?', 12, 16, 1),
-(23, 'Vika, you\'re cool', 12, 16, 1);
+(23, 'Vika, you\'re cool', 12, 16, 1),
+(24, 'new message', 8, 10, 0),
+(26, 'alert(\'hello\')', 8, 10, 0),
+(27, 'hi handsome', 16, 10, 0),
+(28, 'some', 8, 10, 0),
+(29, 'new', 8, 10, 0),
+(30, 'hi handsome', 16, 8, 0);
 
 -- --------------------------------------------------------
 
@@ -183,7 +189,8 @@ INSERT INTO `notifications` (`id`, `type`, `receiver`, `sender`, `extra`) VALUES
 (11, 2, 12, 12, ''),
 (12, 2, 12, 12, ''),
 (13, 2, 8, 16, ''),
-(14, 1, 8, 16, '{ \"postbody\" : \"@Sergey Hello\" }');
+(14, 1, 8, 16, '{ \"postbody\" : \"@Sergey Hello\" }'),
+(15, 1, 16, 16, '{ \"postbody\" : \"@vika some\" }');
 
 -- --------------------------------------------------------
 
@@ -248,15 +255,16 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (86, '#PHP', '2018-12-05 15:15:52', 16, 2, NULL, 'PHP,'),
 (87, '#PHP', '2018-12-05 15:18:03', 16, 1, NULL, 'PHP,'),
 (88, '123456New posts', '2018-12-11 13:18:54', 16, 1, NULL, ''),
-(89, '', '2018-12-11 13:20:02', 16, 1, 'https://i.imgur.com/wjw1LT5.jpg', ''),
+(89, '', '2018-12-11 13:20:02', 16, 2, 'https://i.imgur.com/wjw1LT5.jpg', ''),
 (90, '', '2018-12-11 13:20:23', 16, 1, 'https://i.imgur.com/Qh32soY.jpg', ''),
 (91, 'today 1212', '2018-12-12 10:35:19', 16, 1, NULL, ''),
 (92, 'aua', '2018-12-12 16:32:10', 8, 1, NULL, ''),
-(93, 'aua', '2018-12-12 16:32:29', 8, 1, 'https://i.imgur.com/c33TYs6.jpg', ''),
+(93, 'aua', '2018-12-12 16:32:29', 8, 2, 'https://i.imgur.com/c33TYs6.jpg', ''),
 (94, 'some', '2018-12-17 15:48:50', 8, 1, 'https://i.imgur.com/KY4L5yv.jpg', ''),
 (95, 'some', '2018-12-17 15:49:02', 8, 1, 'https://i.imgur.com/mehk3XI.jpg', ''),
 (96, '', '2018-12-17 15:51:18', 8, 1, 'https://i.imgur.com/4S9gCya.jpg', ''),
-(97, '', '2018-12-17 15:51:42', 8, 0, 'https://i.imgur.com/vHQklOV.jpg', '');
+(97, '', '2018-12-17 15:51:42', 8, 1, 'https://i.imgur.com/vHQklOV.jpg', ''),
+(98, '@vika some', '2018-12-18 13:54:42', 16, 0, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -325,7 +333,10 @@ INSERT INTO `post_likes` (`id`, `post_id`, `user_id`) VALUES
 (199, 27, 8),
 (200, 96, 8),
 (201, 95, 8),
-(202, 94, 8);
+(202, 94, 8),
+(203, 93, 16),
+(204, 89, 16),
+(205, 97, 8);
 
 -- --------------------------------------------------------
 
@@ -444,19 +455,19 @@ ALTER TABLE `followers`
 -- AUTO_INCREMENT для таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT для таблицы `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT для таблицы `password_tokens`
@@ -468,13 +479,13 @@ ALTER TABLE `password_tokens`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT для таблицы `post_likes`
 --
 ALTER TABLE `post_likes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=203;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=206;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
