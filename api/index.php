@@ -4,7 +4,27 @@ require_once __DIR__ . '/../init.php';
 
 $db = new DB("localhost", "SocialNetwork", "root", "");
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
-  if ($_GET['url'] == "auth") {
+  if ($_GET['url'] == "musers") {
+
+    $token = $_COOKIE['SNID'];
+    $userId = $db->query('SELECT user_id FROM login_tokens WHERE token=:token', [':token' => sha1($token)])[0]['user_id'];
+
+    $users = $db->query("SELECT DISTINCT s.username AS Sender, r.username AS Receiver, s.id AS SenderID, r.id AS ReceiverID FROM messages LEFT JOIN users s ON s.id = messages.sender LEFT JOIN users r ON r.id = messages.receiver WHERE (s.id = :userid OR r.id=:userid)", [":userid"=>$userId]);
+
+    $u = [];
+    foreach ($users as $user) {
+      if (!in_array(['username'=>$user['Receiver'], 'id'=>$user['ReceiverID']], $u)) {
+        array_push($u, ['username'=>$user['Receiver'], 'id'=>$user['ReceiverID']]);
+      }
+      if (!in_array(['username'=>$user['Sender'], 'id'=>$user['SenderID']], $u)) {
+        array_push($u, ['username'=>$user['Sender'], 'id'=>$user['SenderID']]);
+      }
+    }
+    echo json_encode($u);
+
+  } else if ($_GET['url'] == "auth") {
+
+
   } else if ($_GET['url'] == 'messages') {
     $sender = $_GET['sender'];
     $token = $_COOKIE['SNID'];

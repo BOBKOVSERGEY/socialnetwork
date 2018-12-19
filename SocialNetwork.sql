@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 18 2018 г., 15:16
+-- Время создания: Дек 19 2018 г., 11:55
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.0.26
 
@@ -112,7 +112,7 @@ CREATE TABLE `login_tokens` (
 --
 
 INSERT INTO `login_tokens` (`id`, `token`, `user_id`) VALUES
-(35, 'c7f78f90afaafd2d6c9877c18182c7db860cbf68', 8);
+(37, '3821bf55b280cc0696f0cba1f4d08c58c202a4da', 8);
 
 -- --------------------------------------------------------
 
@@ -157,7 +157,10 @@ INSERT INTO `messages` (`id`, `body`, `sender`, `receiver`, `watched`) VALUES
 (27, 'hi handsome', 16, 10, 0),
 (28, 'some', 8, 10, 0),
 (29, 'new', 8, 10, 0),
-(30, 'hi handsome', 16, 8, 0);
+(30, 'hi handsome', 16, 8, 0),
+(31, 'serj', 10, 8, 0),
+(32, 'hi vika', 8, 16, 0),
+(33, 'kira', 8, 10, 0);
 
 -- --------------------------------------------------------
 
@@ -190,7 +193,8 @@ INSERT INTO `notifications` (`id`, `type`, `receiver`, `sender`, `extra`) VALUES
 (12, 2, 12, 12, ''),
 (13, 2, 8, 16, ''),
 (14, 1, 8, 16, '{ \"postbody\" : \"@Sergey Hello\" }'),
-(15, 1, 16, 16, '{ \"postbody\" : \"@vika some\" }');
+(15, 1, 16, 16, '{ \"postbody\" : \"@vika some\" }'),
+(16, 1, 8, 8, '{ \"postbody\" : \"@sergey hello world\" }');
 
 -- --------------------------------------------------------
 
@@ -264,7 +268,8 @@ INSERT INTO `posts` (`id`, `body`, `posted_at`, `user_id`, `likes`, `postimg`, `
 (95, 'some', '2018-12-17 15:49:02', 8, 1, 'https://i.imgur.com/mehk3XI.jpg', ''),
 (96, '', '2018-12-17 15:51:18', 8, 1, 'https://i.imgur.com/4S9gCya.jpg', ''),
 (97, '', '2018-12-17 15:51:42', 8, 1, 'https://i.imgur.com/vHQklOV.jpg', ''),
-(98, '@vika some', '2018-12-18 13:54:42', 16, 0, NULL, '');
+(98, '@vika some', '2018-12-18 13:54:42', 16, 0, NULL, ''),
+(99, '@sergey hello world', '2018-12-19 11:49:59', 8, 0, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -455,19 +460,19 @@ ALTER TABLE `followers`
 -- AUTO_INCREMENT для таблицы `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT для таблицы `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `password_tokens`
@@ -479,7 +484,7 @@ ALTER TABLE `password_tokens`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT для таблицы `post_likes`
